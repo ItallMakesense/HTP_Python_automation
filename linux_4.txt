@@ -15,7 +15,7 @@ More info on SSH at http://shahid-academy.com/openssh-configuration-and-usage-pa
 * How about sshfs as an extra task? How do I tie two VMs ~/SSHFS directories with it?
 """
 
-Extra:
+Extra: 
 1) mkdir SSHFS's at both VM's (at home ~ dir)
 2) sudo sshfs -o allow_other,default_permissions root@192.168.56.3:/root/SSHFS ~/SSHFS
 3) bounded.
