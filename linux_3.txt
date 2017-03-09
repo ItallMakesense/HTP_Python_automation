@@ -34,7 +34,7 @@ Linux Foundations: http://rus-linux.net/MyLDP/BOOKS/Linux_Foundations/toc.html
 Advanced BASH guide: http://rus-linux.net/MyLDP/BOOKS/abs-guide/flat/abs-book.html
 """
 
-Solution:
+Solution: 
 From root:
 : nano .bash_profile
 > ls -al /var/log | grep \\.$ > log1
