@@ -35,13 +35,14 @@ Advanced BASH guide: http://rus-linux.net/MyLDP/BOOKS/abs-guide/flat/abs-book.ht
 """
 
 Solution:
-from root:
-    1) nano .bash_profile
-    2) append:
-        ls -aoh /var/log | grep -e '1' | grep -v '\.2' | cat > logs_with\ 1
-        date >> logs_with\ 1
-    3) ctrl+O, ctrl+X
-        4) logout
-        5) login
-        6) cat logs_with\ 1
-        7) repeat
+From root:
+: nano .bash_profile
+> ls -al /var/log | grep \\.$ > log1
+> ls -al /var/log | grep 1 | grep \\.2 > log2
+> comm -12 log1 log2 > logs_with\ 1
+> rm log1 log2 -f
+# ctrl+o, ctrl+x
+# logout
+# login
+> cat logs_with\ 1
+# ~2 min repeat
