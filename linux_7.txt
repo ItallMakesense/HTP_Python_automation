@@ -1,0 +1,19 @@
+"""
+Write a script that will perform automated installation of Java 8 Runtime Environment (JRE) and latest Python 2.x from the official web site
+
+o   You can get latest JRE TGZ from http://javadl.oracle.com/webapps/download/AutoDL?BundleId=211989
+
+o   Preliminary steps for JRE installation you can find here http://tecadmin.net/install-java-8-on-centos-rhel-and-fedora/ or ask @Google
+
+Make sure the previous JRE is removed before the new one gets installed.
+
+Make sure you stop any running java services before removing JRE, same is for Python.
+
+After all installations print out to the terminal Java and Python versions and installation results.
+
+ 
+
+*[extra task] how about handling Ubuntu?
+
+We would use that script for our own purpose, so please make sure you add all possible checks and validations J
+"""
