@@ -1,4 +1,4 @@
-"""
+""" 
 Linux basics: Overview. Installation and Configuration.
 
 Virtual Machines. Hypervisors.
