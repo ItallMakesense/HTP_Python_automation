@@ -29,7 +29,7 @@ def row_making(number, num_row, majors):
         number = number % major
   return num_row
 
-number = 123456
+number = 200
 
 majors_numbers = sorted(majors, reverse=True)
 numb_row = row_making(number, {}, majors_numbers)
@@ -37,24 +37,35 @@ numb_row = row_making(number, {}, majors_numbers)
 pprint.pprint(numb_row)
 
 def hundreds_of_text(numb_row, text_number):
+    decade = None
     for number, count in sorted(numb_row.items(), reverse=True):
         if type(count) == type(dict()):
             text_number = hundreds_of_text(count, text_number)
             text_number.append(majors[number])
-        else:
-            if number == 100:
-                text_number.append(majors[1][count])
-                text_number.append(majors[number])
-                text_number.append('and')
-            elif number == 10:
-                decade = count
-            elif number == 1:
-                if decade == 1:
-                    decade = 10 * decade + count
-                    text_number.append(majors[10][decade])
-                elif decade > 1:
-                    text_number.append(majors[10][10 * decade])
-                    text_number.append(majors[number][count])
+        if number == 1000000 and len(text_number) == 0:
+            text_number.append(majors[1][count])
+            text_number.append(majors[number])
+        if number == 1000 and len(text_number) == 0:
+            text_number.append(majors[1][count])
+            text_number.append(majors[number])
+        if number == 100:
+            text_number.append(majors[1][count])
+            text_number.append(majors[number])
+        if number == 10:
+            decade = count
+            text_number.append(majors[10][10 * decade])
+        if number == 1:
+            if decade == 1:
+                decade = 10 * decade + count
+                text_number.pop(len(text_number) - 1)
+                text_number.append(majors[10][decade])
+                continue
+            if decade > 1:
+                text_number.pop(len(text_number) - 1)
+                text_number.append(majors[10][10 * decade])
+                text_number.append(majors[number][count])
+                continue
+            text_number.append(majors[number][count])
     return text_number
 
 print (" ".join(hundreds_of_text(numb_row, [])))
