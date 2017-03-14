@@ -1,6 +1,3 @@
-import pprint
-
-
 units = {1: 'one', 2: 'two', 3: 'three',
          4: 'four', 5: 'five', 6: 'six',
          7: 'seven', 8: 'eight', 9: 'nine'}
@@ -17,55 +14,48 @@ majors = {1: units, 10: decades, 100: 'hundred',
 
 
 def row_making(number, num_row, majors):
-  for i, major in enumerate(majors):
+  for index, major in enumerate(majors):
     if major > number:
       continue
     else:
       if number // major > 10:
-        num_row[major] = row_making(number // major, {}, majors[i:])
+        num_row[major] = row_making(number // major, {}, majors[index:])
         number = number % major
       else:
         num_row[major] = number // major
         number = number % major
   return num_row
 
-number = 200
 
-majors_numbers = sorted(majors, reverse=True)
-numb_row = row_making(number, {}, majors_numbers)
+def int_to_text(numb_row, text_number=list(), dozen=False):
+  for number, count in sorted(numb_row.items(), reverse=True):
+    if type(count) == type(dict()):
+      text_number = int_to_text(count, text_number)
+      text_number.append(majors[number])
+      continue
+    if number <= 10:
+      if number == 10:
+        if count == 1:
+          dozen = True
+        text_number.append(decades[10 * count])
+      if number == 1:
+        if dozen:
+          text_number.pop(len(text_number) - 1)
+          text_number.append(decades[10 + count])
+        else:
+          text_number.append(units[count])
+    else:
+      text_number.append(units[count])
+      text_number.append(majors[number])
+      if len(numb_row) > 1 and text_number[-1] == 'hundred':
+        text_number.append('and')
+  return text_number
 
-pprint.pprint(numb_row)
 
-def hundreds_of_text(numb_row, text_number):
-    decade = None
-    for number, count in sorted(numb_row.items(), reverse=True):
-        if type(count) == type(dict()):
-            text_number = hundreds_of_text(count, text_number)
-            text_number.append(majors[number])
-        if number == 1000000 and len(text_number) == 0:
-            text_number.append(majors[1][count])
-            text_number.append(majors[number])
-        if number == 1000 and len(text_number) == 0:
-            text_number.append(majors[1][count])
-            text_number.append(majors[number])
-        if number == 100:
-            text_number.append(majors[1][count])
-            text_number.append(majors[number])
-        if number == 10:
-            decade = count
-            text_number.append(majors[10][10 * decade])
-        if number == 1:
-            if decade == 1:
-                decade = 10 * decade + count
-                text_number.pop(len(text_number) - 1)
-                text_number.append(majors[10][decade])
-                continue
-            if decade > 1:
-                text_number.pop(len(text_number) - 1)
-                text_number.append(majors[10][10 * decade])
-                text_number.append(majors[number][count])
-                continue
-            text_number.append(majors[number][count])
-    return text_number
+def int_to_words(number):
+  numb_row = row_making(int(number), {}, sorted(majors, reverse=True))
+  return " ".join(int_to_text(numb_row))
 
-print (" ".join(hundreds_of_text(numb_row, [])))
+number = input("Type integer number here: ")
+
+print (int_to_words(number))
