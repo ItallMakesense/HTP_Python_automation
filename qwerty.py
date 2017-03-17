@@ -88,14 +88,14 @@ class Car(object):
 
     @property
     def fuel(self):
-        if not len(self.__total_cars) % 3:
+        if not self.number % 3:
             return Fuel('diesel', 1.8)
         else:
             return Fuel()
 
     @property
     def tank(self):
-        if not len(self.__total_cars) % 5:
+        if not self.number % 5:
             return Tank(75)
         else:
             return Tank()
@@ -163,7 +163,7 @@ def cars_type(obj):
     pass
 
 
-cars = [Car() for _ in range(10)]
+cars = [Car() for _ in range(100)]
 for car in cars:
     car.run()
     car.run_till_util()
@@ -171,4 +171,4 @@ for car in cars:
           (int(car.cost.value), car.tahograph, int(car.fuel_ups_cost),
            car.fuel_ups_count, car.remain_mileage))
 print('sum:', sum([car.cost.value for car in cars]))
-# cars = filter(lambda cost: ) d_car in [filter(lambda : car.fuel.type == 'diesel', car) for car in cars]
+print(sorted(list(filter(lambda car: car.fuel.type == 'diesel', cars))), key=lambda d_car: d_car.cost.value)
