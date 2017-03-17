@@ -1,123 +1,111 @@
-import random
+from random import randrange as rand 
 
 
-class Engine(object):
-    __total_engines = []
+class Engine():
 
-    def __init__(self, fuel, consumption=0):
+    def __init__(self, fuel='gasoline', consumption=0.08):
+        self.consumption = consumption
+
+
+class Fuel():
+
+    def __init__(self, fuel='gasoline', cost=2.4):
+        self.type = fuel
+        self.cost = Cost('fuel', self.type, cost)
+
+
+class Tank():
+
+    def __init__(self, capasity=60):
+        self.capasity = capasity
+
+
+class Cost():
+
+    def __init__(self, keyword='car', fuel='gasoline', cost=10000):
         if fuel == 'gasoline':
-            self.cons = 0.08
+            if keyword == 'fuel':
+                self.value = 2.4
+            elif keyword == 'cost_down':
+                self.value = 9.5
+            elif keyword == 'service':
+                self.value = 500
+            elif keyword == 'car':
+                self.value = cost
         elif fuel == 'diesel':
-            self.cons = 0.06
+            if keyword == 'fuel':
+                self.value = 1.8
+            elif keyword == 'cost_down':
+                self.value = 10.5
+            elif keyword == 'service':
+                self.value = 700
+            elif keyword == 'car':
+                self.value = cost
         else:
-            self.cons = consumption
+            self.value = cost
 
 
-class Fuel(object):
+class Way():
 
-    def __init__(self, fuel_type='gasoline', fuel_cost=2.4):
-        self.fuel_type = fuel_type
-
-    @property
-    def __call__(self):
-        return self.fuel_type
-
-    @property
-    def cost(self):
-        return Cost('fuel', fuel_cost)
-
-
-class Tank(object):
-
-    def __init__(self, number):
-        if not number % 5:
-            self.capasity = 75
-        else:
-            self.capasity = 60
-
-    @property
-    def __call__(self):
-        return self.capasity
-
-
-class Cost(object):
-
-    def __init__(self, dependency="", cost=10000):
-        if dependency == 'gasoline':
-            self.cost = 9.5
-        elif dependency == 'diesel':
-            self.cost = 10.5
-        else:
-            self.cost = cost
-
-    @property
-    def __call__(self):
-        return self.cost
-
-
-class Way(object):
-
-    def __init__(self, dependency=None, way=0):
-        if dependency == 'gasoline':
-            self.way = 100000
-        elif dependency == 'diesel':
-            self.way = 150000
-        else:
-            self.way = way
-        return self.way
-
-    @property
-    def __call__(self):
-        return self.way
-
-
-class Service(object):
-
-    def __init__(self, fuel, cost=0):
+    def __init__(self, fuel=None, length=42):
         if fuel == 'gasoline':
-            self.cost = Cost('service', 500)
+            self.length = 100000
         elif fuel == 'diesel':
-            self.cost = Cost('service', 700)
+            self.length = 150000
         else:
-            self.cost = cost
+            self.length = length
 
-    @property
-    def __call__(self):
-        return self.cost
+
+class Service():
+
+    def __init__(self, fuel, cost=False):
+        if cost:
+            self.cost = cost
+        else:
+            self.cost = Cost('service', fuel)
+        self.count = 0
 
     def run(self, car):
-        car.cost += self.cost
+        car.cost.value -= car.service.cost.value
         self.count += 1
-
-
-class Tahograph(object):
-
-    def __init__(self):
-        self.indication = 0
-        return self.indication
-
-    @property
-    def __call__(self):
-        return self.indication
 
 
 class Car(object):
     __total_cars = []
-    __tahograph = Tahograph()
-    __utilize = False
 
     def __init__(self, name='Noname', *args):
         self.__total_cars.append(name)
-        self.name = name
         self.number = len(self.__total_cars)
+        self.name = name
+        self.__tahograph = 0
+        self.__utilize = False
         self.cost = Cost()
-        if not self.number % 3:
-            self.fuel = Fuel('diesel', 1.8)
-        else:
-            self.fuel = Fuel()
-        self.service = Service(self.fuel)
+        self.service = Service(self.fuel.type)
         self.fuel_ups_cost = 0
         self.fuel_ups_count = 0
+        self.route = Way('route', rand(55000, 286000))
+        self.remain_mileage = 0
+
+    @property
+    def fuel(self):
+        if not len(self.__total_cars) % 3:
+            return Fuel('diesel', 1.8)
+        else:
+            return Fuel()
+
+    @property
+    def tank(self):
+        if not len(self.__total_cars) % 5:
+            return Tank(75)
+        else:
+            return Tank()
+
+    @property
+    def engine(self):
+        if self.fuel.type == 'gasoline':
+            return Engine()
+        elif self.fuel.type == 'diesel':
+            return Engine('diesel', 0.06)
 
     @property
     def tahograph(self):
@@ -127,40 +115,57 @@ class Car(object):
     def tahograph(self, value):
         pass
 
-    def __call__(self, way=0):
-        self.run(way)
-
+    @property
     def fuel_up(self):
-        self.fuel_ups_cost += Tank(self.number) * self.fuel.cost
+        self.fuel_ups_cost += self.tank.capasity * self.fuel.cost.value
         self.fuel_ups_count += 1
 
-    def run(self, way, way_gone=__tahograph):
-        while way_gone <= way:
-            if self.cost <= 0:
+    def run(self, way_gone=0):
+        while way_gone <= self.route.length and not self.__utilize:
+            if self.cost.value <= 0:
                 print("Well, it's done.")
+                print(way_gone)
                 self.__utilize = True
-                break
             else:
                 raise_rate = 1.01 ** (way_gone // 1000)
-                way_gone += Tank(self.number) / \
-                    (Engine(self.fuel).cons * raise_rate)
-                if (way_gone // Way(self.fuel)) > self.service.count:
+                way_gone += self.tank.capasity / \
+                    (self.engine.consumption * raise_rate)
+                if (way_gone // Way(self.fuel.type).length)\
+                        > self.service.count:
                     self.service.run(self)
                 else:
-                    self.fuel_up()
+                    self.fuel_up
         if self.__utilize:
-            self.__tahograph = way_gone
-            self.cost = 0
+            self.__tahograph += way_gone
+            self.cost.value = 0
+            print('got here', way_gone)
         else:
-            self.__tahograph = way
-            self.cost -= Cost(self.fuel) * self.__tahograph / 1000
+            self.__tahograph += self.route.length
+            self.cost.value -= Cost('cost_down', self.fuel.type).value * \
+                (self.__tahograph / 1000)
+            print('got there', way_gone, self.cost.value)
 
-car_park = []
-for num in range(100):
-    car = Car(str(num + 1))
-    car_park.append(car)
+    def run_till_util(self):
+        saved_tahograph = self.__tahograph
+        print(saved_tahograph)
+        saved_cost = self.cost.value
+        saved_fuel_ups_cost = self.fuel_ups_cost
+        saved_fuel_ups_count = self.fuel_ups_count
+        saved_service_count = self.service.count
+        while not self.__utilize:
+            self.run()
+            print('tahograph in remains', self.tahograph)
+        self.remain_mileage = self.tahograph - saved_tahograph
+        self.__tahograph = saved_tahograph
+        self.cost.value = saved_cost
+        self.fuel_ups_cost = saved_fuel_ups_cost
+        self.fuel_ups_count = saved_fuel_ups_count
+        self.service.count = saved_service_count
+
+
+car_park = [Car() for _ in range(2)]
 for car in car_park:
-    car(Way(random.randrange(55000, 286000)))
-for car in car_park:
-    print('cost: {}\n\t mileage: {}\n\t\t fuel cost: {}\n\t\t\t fuel count: {}'.format
-          (car.cost, car.tahograph, car.fuel_ups_cost, car.fuel_ups_count))
+    car.run()
+    car.run_till_util()
+    print('cost: %s\t mileage: %s\t fuel cost: %s\t fuel count: %s\t remain: %s\n' %\
+          (int(car.cost.value), car.tahograph, int(car.fuel_ups_cost), car.fuel_ups_count, car.remain_mileage))
