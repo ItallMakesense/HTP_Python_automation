@@ -1,4 +1,4 @@
-from random import randrange as rand 
+from random import randrange as rand
 
 
 class Engine():
@@ -121,15 +121,17 @@ class Car(object):
         self.fuel_ups_count += 1
 
     def run(self, way_gone=0):
+        thousands = 0
         while way_gone <= self.route.length and not self.__utilize:
             if self.cost.value <= 0:
-                print("Well, it's done.")
-                print(way_gone)
                 self.__utilize = True
             else:
                 raise_rate = 1.01 ** (way_gone // 1000)
                 way_gone += self.tank.capasity / \
                     (self.engine.consumption * raise_rate)
+                if way_gone // 1000 > thousands:
+                    self.cost.value -= Cost('cost_down', self.fuel.type).value
+                    thousands += 1
                 if (way_gone // Way(self.fuel.type).length)\
                         > self.service.count:
                     self.service.run(self)
@@ -138,23 +140,17 @@ class Car(object):
         if self.__utilize:
             self.__tahograph += way_gone
             self.cost.value = 0
-            print('got here', way_gone)
         else:
             self.__tahograph += self.route.length
-            self.cost.value -= Cost('cost_down', self.fuel.type).value * \
-                (self.__tahograph / 1000)
-            print('got there', way_gone, self.cost.value)
 
     def run_till_util(self):
         saved_tahograph = self.__tahograph
-        print(saved_tahograph)
         saved_cost = self.cost.value
         saved_fuel_ups_cost = self.fuel_ups_cost
         saved_fuel_ups_count = self.fuel_ups_count
         saved_service_count = self.service.count
         while not self.__utilize:
             self.run()
-            print('tahograph in remains', self.tahograph)
         self.remain_mileage = self.tahograph - saved_tahograph
         self.__tahograph = saved_tahograph
         self.cost.value = saved_cost
@@ -163,9 +159,16 @@ class Car(object):
         self.service.count = saved_service_count
 
 
-car_park = [Car() for _ in range(2)]
-for car in car_park:
+def cars_type(obj):
+    pass
+
+
+cars = [Car() for _ in range(10)]
+for car in cars:
     car.run()
     car.run_till_util()
-    print('cost: %s\t mileage: %s\t fuel cost: %s\t fuel count: %s\t remain: %s\n' %\
-          (int(car.cost.value), car.tahograph, int(car.fuel_ups_cost), car.fuel_ups_count, car.remain_mileage))
+    print('cost: %s\t gone: %s\t fuel: %s\t fuel count: %s\t remain: %s\n' %
+          (int(car.cost.value), car.tahograph, int(car.fuel_ups_cost),
+           car.fuel_ups_count, car.remain_mileage))
+print('sum:', sum([car.cost.value for car in cars]))
+# cars = filter(lambda cost: ) d_car in [filter(lambda : car.fuel.type == 'diesel', car) for car in cars]
