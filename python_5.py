@@ -1,4 +1,5 @@
 from random import randrange as rand
+import pprint
 
 
 class Engine():
@@ -151,7 +152,7 @@ class Car(object):
         saved_service_count = self.service.count
         while not self.__utilize:
             self.run()
-        self.remain_mileage = self.tahograph - saved_tahograph
+        self.remain_mileage = int(self.tahograph - saved_tahograph)
         self.__tahograph = saved_tahograph
         self.cost.value = saved_cost
         self.fuel_ups_cost = saved_fuel_ups_cost
@@ -159,16 +160,18 @@ class Car(object):
         self.service.count = saved_service_count
 
 
-def cars_type(obj):
-    pass
-
-
 cars = [Car() for _ in range(100)]
 for car in cars:
     car.run()
     car.run_till_util()
-    print('cost: %s\t gone: %s\t fuel: %s\t fuel count: %s\t remain: %s\n' %
-          (int(car.cost.value), car.tahograph, int(car.fuel_ups_cost),
-           car.fuel_ups_count, car.remain_mileage))
-print('sum:', sum([car.cost.value for car in cars]))
-print(sorted(list(filter(lambda car: car.fuel.type == 'diesel', cars))), key=lambda d_car: d_car.cost.value)
+cars_diesel = list(filter(lambda car: car.fuel.type == 'diesel', cars))
+cars_diesel.sort(key=lambda car: car.cost.value, reverse=True)
+cars_gasoline = list(filter(lambda car: car.fuel.type == 'gasoline', cars))
+cars_gasoline.sort(key=lambda car: car.remain_mileage, reverse=True)
+print('Diesel cars, by remain cost:')
+for car in cars_diesel:
+    print('Car #{}, {}, cost: {}'.format(car.number, car.name, car.cost.value))
+print('\nGasoline cars, by remain mileage:')
+for car in cars_gasoline:
+    print('Car #{}, {}, milege: {}'.format(car.number, car.name, car.remain_mileage))
+print('\nTotal cars remain cost:\n\t', sum([car.cost.value for car in cars]))
