@@ -127,8 +127,13 @@ class Car(object):
         while way_gone <= self.route and not self.__utilize:
             if self.cost.value <= 0:
                 self.__utilize = True
+                self.cost.value = 0
             else:
-                way_gone += self.tank.capasity / consumption_at_moment
+                if self.tank.capasity / 10 > consumption_at_moment:
+                    way_gone += self.tank.capasity / consumption_at_moment
+                else:
+                    self.__utilize = True
+                    continue
                 if way_gone // self.engine.cons_increase_point > thousands_of_kilometers:
                     self.cost.value -= self.cost.loss
                     consumption_at_moment *= self.engine.cons_increase_rate
@@ -139,12 +144,13 @@ class Car(object):
                     self.tank.fuel_up()
         if self.__utilize:
             self.__tahograph += way_gone
-            self.cost.value = 0
         else:
             self.__tahograph += self.route
+        self.engine.consumption = consumption_at_moment
 
     def run_till_util(self):
-        saved_tahograph = self.__tahograph
+        saved_tahograph = self.tahograph
+        saved_consumption = self.engine.consumption
         saved_cost = self.cost.value
         saved_fuel_up_cost = self.tank.fuel_up_cost
         saved_fuel_up_count = self.tank.fuel_up_count
@@ -153,13 +159,14 @@ class Car(object):
             self.run()
         self.remain_mileage = int(self.tahograph - saved_tahograph)
         self.__tahograph = saved_tahograph
+        self.engine.consumption = saved_consumption
         self.cost.value = saved_cost
         self.tank.fuel_up_cost = saved_fuel_up_cost
         self.tank.fuel_up_count = saved_fuel_up_count
         self.service.count = saved_service_count
 
 
-cars = [Car() for _ in range(3)]
+cars = [Car() for _ in range(100)]
 for car in cars:
     car.run()
     car.run_till_util()
