@@ -3,8 +3,10 @@ from random import randrange as rand
 
 class Engine():
 
-    def __init__(self, fuel='gasoline', consumption=0.08):
+    def __init__(self, consumption=0.08):
         self.consumption = consumption
+        self.cons_increase_rate = 1.01
+        self.cons_increase_point = 1000
 
 
 class Fuel():
@@ -33,19 +35,17 @@ class Cost():
         if fuel == 'gasoline':
             if keyword == 'car':
                 self.value = cost
+                self.loss = 9.5
             elif keyword == 'fuel':
-                self.value = 2.4
-            elif keyword == 'loss':
-                self.value = 9.5
+                self.value = cost
             elif keyword == 'serv':
                 self.value = 500
         elif fuel == 'diesel':
             if keyword == 'car':
                 self.value = cost
+                self.loss = 10.5
             elif keyword == 'fuel':
-                self.value = 1.8
-            elif keyword == 'loss':
-                self.value = 10.5
+                self.value = cost
             elif keyword == 'serv':
                 self.value = 700
         else:
@@ -70,10 +70,11 @@ class Service():
             self.cost = other_cost
         else:
             self.cost = Cost('serv', fuel.type).value
+            self.point = Way(fuel.type).length
         self.count = 0
 
-    def run(self, car):
-        car.cost -= car.service.cost
+    def run(self, given_car):
+        given_car.cost.value -= self.cost
         self.count += 1
 
 
@@ -88,9 +89,9 @@ class Car(object):
         self.__utilize = False
         self.tank = self.choose_tank()
         self.engine = self.choose_engine()
-        self.cost = Cost().value
+        self.cost = Cost()
         self.service = Service(self.tank.fuel)
-        self.route = Way('route', rand(55000, 286000))
+        self.route = Way('route', rand(55000, 286000)).length
         self.remain_mileage = 0
 
     @property
@@ -110,7 +111,7 @@ class Car(object):
         if self.tank.fuel.type == 'gasoline':
             return Engine()
         elif self.tank.fuel.type == 'diesel':
-            return Engine('diesel', 0.06)
+            return Engine(0.06)
 
     @property
     def tahograph(self):
@@ -122,30 +123,29 @@ class Car(object):
 
     def run(self, way_gone=0):
         thousands_of_kilometers = 0
-        while way_gone <= self.route.length and not self.__utilize:
-            if self.cost <= 0:
+        consumption_at_moment = self.engine.consumption
+        while way_gone <= self.route and not self.__utilize:
+            if self.cost.value <= 0:
                 self.__utilize = True
             else:
-                raise_rate = 1.01 ** (way_gone // 1000)
-                way_gone += self.tank.capasity / \
-                    (self.engine.consumption * raise_rate)
-                if way_gone // 1000 > thousands_of_kilometers:
-                    self.cost -= Cost('loss', self.tank.fuel.type).value
+                way_gone += self.tank.capasity / consumption_at_moment
+                if way_gone // self.engine.cons_increase_point > thousands_of_kilometers:
+                    self.cost.value -= self.cost.loss
+                    consumption_at_moment *= self.engine.cons_increase_rate
                     thousands_of_kilometers += 1
-                if (way_gone // Way(self.fuel.type).length)\
-                        > self.service.count:
+                if (way_gone // self.service.point) > self.service.count:
                     self.service.run(self)
                 else:
                     self.tank.fuel_up()
         if self.__utilize:
             self.__tahograph += way_gone
-            self.cost = 0
+            self.cost.value = 0
         else:
-            self.__tahograph += self.route.length
+            self.__tahograph += self.route
 
     def run_till_util(self):
         saved_tahograph = self.__tahograph
-        saved_cost = self.cost
+        saved_cost = self.cost.value
         saved_fuel_up_cost = self.tank.fuel_up_cost
         saved_fuel_up_count = self.tank.fuel_up_count
         saved_service_count = self.service.count
@@ -153,24 +153,24 @@ class Car(object):
             self.run()
         self.remain_mileage = int(self.tahograph - saved_tahograph)
         self.__tahograph = saved_tahograph
-        self.cost = saved_cost
+        self.cost.value = saved_cost
         self.tank.fuel_up_cost = saved_fuel_up_cost
         self.tank.fuel_up_count = saved_fuel_up_count
         self.service.count = saved_service_count
 
 
-cars = [Car() for _ in range(100)]
+cars = [Car() for _ in range(3)]
 for car in cars:
     car.run()
     car.run_till_util()
 cars_diesel = list(filter(lambda car: car.tank.fuel.type == 'diesel', cars))
-cars_diesel.sort(key=lambda car: car.cost, reverse=True)
+cars_diesel.sort(key=lambda car: car.cost.value, reverse=True)
 cars_gasoline = list(filter(lambda car: car.tank.fuel.type == 'gasoline', cars))
 cars_gasoline.sort(key=lambda car: car.remain_mileage, reverse=True)
 print('Diesel cars, by remain cost:')
 for car in cars_diesel:
-    print('Car #{}, {}, cost: {}'.format(car.number, car.name, car.cost))
+    print('Car #{}, {}, cost: {}'.format(car.number, car.name, car.cost.value))
 print('\nGasoline cars, by remain mileage:')
 for car in cars_gasoline:
     print('Car #{}, {}, milege: {}'.format(car.number, car.name, car.remain_mileage))
-print('\nTotal cars remain cost:\n\t', sum([car.cost for car in cars]))
+print('\nTotal cars remain cost:\n\t', sum([car.cost.value for car in cars]))
