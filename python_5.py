@@ -32,24 +32,17 @@ class Tank():
 class Cost():
 
     def __init__(self, keyword='car', fuel='gasoline', cost=10000):
+        self.value = cost
         if fuel == 'gasoline':
             if keyword == 'car':
-                self.value = cost
                 self.loss = 9.5
-            elif keyword == 'fuel':
-                self.value = cost
             elif keyword == 'serv':
                 self.value = 500
         elif fuel == 'diesel':
             if keyword == 'car':
-                self.value = cost
                 self.loss = 10.5
-            elif keyword == 'fuel':
-                self.value = cost
             elif keyword == 'serv':
                 self.value = 700
-        else:
-            self.value = cost
 
 
 class Way():
