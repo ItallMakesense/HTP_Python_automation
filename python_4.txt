@@ -1,0 +1,11 @@
+Create an function int_to_words that translates integers to words.
+
+For a given positive integer convert it into its English representation. All words are lower case and are separated with one space. No trailing spaces are allowed. Integer will be up to a million (including).
+
+int_to_words(15) # => 'fifteen'
+
+ 
+
+Writing of the word 'and' isn't enforced, but very welcomed.
+
+int_to_words(12356) # => 'twelve thousand three hundred and fifty six'
