@@ -1,4 +1,5 @@
 from random import randrange as rand
+import threading
 
 
 class Engine():
@@ -71,10 +72,11 @@ class Service():
         self.count += 1
 
 
-class Car(object):
+class Car(threading.Thread):
     __total_cars = []
 
     def __init__(self, name='Noname'):
+        threading.Thread.__init__(self)
         self.__total_cars.append(name)
         self.number = len(self.__total_cars)
         self.name = name
@@ -86,6 +88,10 @@ class Car(object):
         self.service = Service(self.tank.fuel)
         self.route = Way('route', rand(55000, 286000)).length
         self.remain_mileage = 0
+
+    def run(self):
+        self.go()
+        self.run_till_util()
 
     @property
     def fuel(self):
@@ -114,7 +120,7 @@ class Car(object):
     def tahograph(self, value):
         pass
 
-    def run(self, way_gone=0):
+    def go(self, way_gone=0):
         thousands_of_kilometers = 0
         consumption_at_moment = self.engine.consumption
         while way_gone <= self.route and not self.__utilize:
@@ -149,7 +155,7 @@ class Car(object):
         saved_fuel_up_count = self.tank.fuel_up_count
         saved_service_count = self.service.count
         while not self.__utilize:
-            self.run()
+            self.go()
         self.remain_mileage = int(self.tahograph - saved_tahograph)
         self.__tahograph = saved_tahograph
         self.engine.consumption = saved_consumption
@@ -159,10 +165,11 @@ class Car(object):
         self.service.count = saved_service_count
 
 
-cars = [Car() for _ in range(100)]
+cars = [Car() for _ in xrange(100)]
 for car in cars:
-    car.run()
-    car.run_till_util()
+    car.start()
+    while car.is_alive():
+        pass
 cars_diesel = list(filter(lambda car: car.tank.fuel.type == 'diesel', cars))
 cars_diesel.sort(key=lambda car: car.cost.value, reverse=True)
 cars_gasoline = list(filter(lambda car: car.tank.fuel.type == 'gasoline', cars))
