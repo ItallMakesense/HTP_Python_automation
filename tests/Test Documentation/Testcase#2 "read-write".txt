@@ -1,0 +1,19 @@
+=Name:
+rwTest.py
+
+=Description:
+This testcase includes three test functions, that check, if specified user on a client machine can create, edit and delete files in shared nfs folder.
+
+=Steps:
+1. Runs command by bash to create a file "creation_check" in mounted "/mnt/test_nfs" folder.
+2. If there was a message from console, that we are trying to write a file in read-only folder, then test passes as failed.
+3. And vice versa, test passes as successful.
+
+4. Runs command by bash to edit a file "edition_check" in mounted "/mnt/test_nfs" folder.
+5. If there was a message from console, that we are trying to edit a file in read-only folder, then test passes as failed.
+6. And vice versa, test passes as successful.
+
+7. Runs command by bash to delete a file "creation_check" in mounted "/mnt/test_nfs" folder.
+8. If there was a message from console, that we are trying to delete a non-existing file, then test passes as failed.
+9. And vice versa, test passes as successful.
+

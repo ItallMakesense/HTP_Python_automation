@@ -1,0 +1,18 @@
+=Name:
+enviro.py
+
+=Description:
+This module prepares and cleanes environment for testing operations.
+
+"client_connect" function is used as a decorator, allowing other functions to execute commands on a client machine by ssh.
+
+"package_explore" function defines, which package manager is used on our linux machines - both server and client - for further installations.
+
+"get_remote_distribution" function defines and returns linux distribution name on the client machine.
+
+"sudo_command_executor" function is used to execute shell command on a server machine with root permitions (also writes results and errors of command execution into log file).
+
+"server_nfs" function is used for specific commands execution in the order, defined by list received in function arguments. This function uses "sudo_command_executor" as their main function.
+
+"client_nfs" function is used to execute shell commands on a client machine with root permitions. Commands execution goes on in the order, defined by list received in function arguments. The function also writes results and errors of command execution into log file.
+

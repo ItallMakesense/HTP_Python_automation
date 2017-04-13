@@ -1,0 +1,18 @@
+=Name:
+ownTest.py
+
+=Description:
+This testcase includes two test functions, that check, if different users on a client machine can access shared nfs folder.
+
+=Stes:
+1. (Preparation step) Runs command by bash to create a new user "test_user" on a client machine, with "test" password.
+
+2. From specified user runs command by bash to edit file "edition_check" in mounted "/mnt/test_nfs" folder.
+3. If there was a message from console, that we have no permission to work in this folder, then test passes as failed.
+4. And vice versa, test passes as successful.
+
+5. From newly created user runs command by bash to edit file "edition_check" in mounted "/mnt/test_nfs" folder.
+6. If there was a message from console, that we have no permission to work in this folder, then test passes as successful.
+7. And vice versa, test passes as failed.
+
+8.(Restoration step) Runs command by bash to delete newly created user "test_user" on a client machine.
