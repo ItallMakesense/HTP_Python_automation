@@ -38,7 +38,9 @@ for result in results_match:
 
 choice = None
 while choice != 'y' and choice != 'n':
-    choice = input("Print results' short info? [y/n]: ").lower()
+    choice = input("Print results' short info? [y/N]: ").lower()
+    if not choice:
+        choice = 'n'
 if choice == 'y':
     for r, i, l in zip(results_match, results_info, results_links):
         wiki_results.append([r, i, l])
