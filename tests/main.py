@@ -1,69 +1,84 @@
-import pip
 import unittest
 import platform
 import os
 import sys
-import time
+import logging
+import subprocess
+
 
 if platform.system() != 'Linux':
     sys.exit('Your system is not Linux. Test aborted.')
 
-def package_needed(package):
-    for i in pip.get_installed_distributions():
-        if package in str(i):
-            return False
-    
-if package_needed("paramiko"):
-    can = subprocess.PIPE
-    proc = subprocess.Popen("sudo -S pip install paramiko", shell=True, stdin=can, stdout=can, stderr=can)
-    outs, errors = proc.communicate(input="{}\n".format(server_password).encode())
-if not package_needed("paramiko"):
-    import paramiko
-    import enviro
+env_log = logging.getLogger("enviro_log")
+env_log.setLevel(logging.INFO)
+env_log_file = logging.FileHandler(os.getcwd()+'/enviro.log')
+env_formatter = logging.Formatter("%(asctime)s - %(name)s: %(message)s")
+env_log_file.setFormatter(env_formatter)
+env_log.addHandler(env_log_file)
 
-@enviro.client_connect
-def executor(command, ssh='connect'):
-    stdin, stdout, stderr = ssh.exec_command("sudo -S {}".format(command))
-    stdin.write("{}\n".format(enviro.client_password).encode())
-    stdin.flush()
-    return stderr.read().decode()
+tests_log = logging.getLogger("tests_log")
+tests_log.setLevel(logging.INFO)
+tests_log_file = logging.FileHandler(os.getcwd()+'/tests.log')
+tests_formatter = logging.Formatter("%(asctime)s - %(name)s: %(message)s")
+tests_log_file.setFormatter(tests_formatter)
+tests_log.addHandler(tests_log_file)
 
-class MainTest(unittest.TestCase):
+if "paramiko" not in sys.modules:
+    env_log.info("       Server command execution:$ pip install paramiko")
+    exit_code = subprocess.call("pip install paramiko", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    env_log.info("\"paramiko\" module successfully installed." if not exit_code else "\"paramiko\" module not installed.")
 
-    def setUp(self):
-        self.env_log = os.getcwd()+'/enviro.log'
+import enviro
 
-        open(self.env_log, 'w').close()
-        with open(self.env_log, "a") as log:
-            enviro.server_nfs(enviro.nfs_setup_commands, log)
-            log.write('\n')
-            enviro.client_nfs(enviro.nfs_remote_commands, log)
+env_log.info("________________________________________________________")
+env_log.info("___________________Server information___________________")
+env_log.info("sysname: {}".format(os.uname().sysname))
+env_log.info("nodename: {}".format(os.uname().nodename))
+env_log.info("release: {}".format(os.uname().release))
+env_log.info("version: {}".format(os.uname().version))
+env_log.info("machine: {}".format(os.uname().machine))
+env_log.info("python: {}".format(platform.python_version()))
+for num, mod in enumerate(sys.modules.keys()):
+    if num == 0:
+        modules_row = []
+    modules_row.append(mod)
+    if not num % 4 or num == len(sys.modules.keys()):
+        if num == 4:
+            env_log.info("modules: {}".format(", ".join(modules_row)))
+        else:
+            env_log.info("         {}".format(", ".join(modules_row)))
+        modules_row = []
 
-        testNames = ['roTest', 'rwTest', 'ownTest']
+# Make Client information here
 
-        self.suite = unittest.TestSuite()
-        loader = unittest.defaultTestLoader
-        for test in testNames:
-            testCase = loader.loadTestsFromModule(__import__(test))
-            self.suite.addTest(testCase)
+env_log.info("________________________________________________________")
+env_log.info("________________Server preparation began________________")
+enviro.server_nfs(enviro.nfs_setup_commands)
+env_log.info("________________________________________________________")
+env_log.info("________________Client Preparation began________________")
+enviro.client_nfs(enviro.nfs_remote_commands)
 
-    def test_all_tests(self):
-        tests_log = os.getcwd()+'/tests.log'
-        open(tests_log, 'w').close()
-        with open(tests_log, "a") as log:
-            log.write(time.ctime()+'\n')
-            unittest.TextTestRunner(stream=log, verbosity=2).run(self.suite)
+test_names = ['roTest', 'rwTest', 'ownTest']
+suite = unittest.TestSuite()
+loader = unittest.defaultTestLoader
+for test in test_names:
+    tests_log.info("{} loading...".format(test))
+    testCase = loader.loadTestsFromModule(__import__(test))
+    tests_log.info("{} loaded.".format(test))
+    suite.addTest(testCase)
+    tests_log.info("{} added to the test suite.".format(test))
 
-    def tearDown(self):
-        with open(self.env_log, "a") as log:
-            log.write('\n')
-            enviro.client_nfs(enviro.end_remote_commands, log)
-            log.write('\n')
-            enviro.server_nfs(enviro.end_nfs_commands, log)
+env_log.info("________________________________________________________")
+env_log.info("_________________Tests execution began__________________")
+tests_log.info("_________________Tests execution began__________________")
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+env_log.info("________________________________________________________")
+env_log.info("______________Client state rollback began_______________")
+enviro.client_nfs(enviro.end_remote_commands)
+env_log.info("________________________________________________________")
+env_log.info("______________Server state rollback began_______________")
+enviro.server_nfs(enviro.end_nfs_commands)
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
-
-
-
-
+    pass
