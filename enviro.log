@@ -1,0 +1,286 @@
+2017-05-01 14:02:06,810 - enviro_log:        Server command execution:$ pip install paramiko
+2017-05-01 14:02:07,829 - enviro_log: "paramiko" module successfully installed.
+2017-05-01 14:02:08,446 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:02:08,446 - enviro_log:        Client command execution:$ python -c "import platform; print(platform.linux_distribution(full_distribution_name=0)[0])"
+2017-05-01 14:02:09,012 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:02:09,013 - enviro_log: ________________________________________________________
+2017-05-01 14:02:09,013 - enviro_log: ___________________Server information___________________
+2017-05-01 14:02:09,013 - enviro_log: sysname: Linux
+2017-05-01 14:02:09,013 - enviro_log: nodename: engine
+2017-05-01 14:02:09,013 - enviro_log: release: 4.10.0-20-generic
+2017-05-01 14:02:09,013 - enviro_log: version: #22-Ubuntu SMP Thu Apr 20 09:22:42 UTC 2017
+2017-05-01 14:02:09,013 - enviro_log: machine: x86_64
+2017-05-01 14:02:09,013 - enviro_log: python: 3.6.0
+2017-05-01 14:02:09,013 - enviro_log:          builtins
+2017-05-01 14:02:09,014 - enviro_log: modules: sys, _frozen_importlib, _imp, _warnings
+2017-05-01 14:02:09,014 - enviro_log:          _thread, _weakref, _frozen_importlib_external, _io
+2017-05-01 14:02:09,014 - enviro_log:          marshal, posix, zipimport, encodings
+2017-05-01 14:02:09,014 - enviro_log:          codecs, _codecs, encodings.aliases, encodings.utf_8
+2017-05-01 14:02:09,014 - enviro_log:          _signal, __main__, encodings.latin_1, io
+2017-05-01 14:02:09,014 - enviro_log:          abc, _weakrefset, site, os
+2017-05-01 14:02:09,014 - enviro_log:          errno, stat, _stat, posixpath
+2017-05-01 14:02:09,014 - enviro_log:          genericpath, os.path, _collections_abc, _sitebuiltins
+2017-05-01 14:02:09,014 - enviro_log:          sysconfig, _sysconfigdata_m_linux_x86_64-linux-gnu, _bootlocale, _locale
+2017-05-01 14:02:09,014 - enviro_log:          types, functools, _functools, collections
+2017-05-01 14:02:09,015 - enviro_log:          operator, _operator, keyword, heapq
+2017-05-01 14:02:09,015 - enviro_log:          _heapq, itertools, reprlib, _collections
+2017-05-01 14:02:09,015 - enviro_log:          weakref, collections.abc, unittest, unittest.result
+2017-05-01 14:02:09,015 - enviro_log:          traceback, linecache, tokenize, re
+2017-05-01 14:02:09,015 - enviro_log:          enum, sre_compile, _sre, sre_parse
+2017-05-01 14:02:09,015 - enviro_log:          sre_constants, copyreg, token, unittest.util
+2017-05-01 14:02:09,015 - enviro_log:          unittest.case, difflib, logging, time
+2017-05-01 14:02:09,015 - enviro_log:          warnings, string, _string, threading
+2017-05-01 14:02:09,015 - enviro_log:          atexit, pprint, contextlib, unittest.suite
+2017-05-01 14:02:09,015 - enviro_log:          unittest.loader, fnmatch, unittest.main, argparse
+2017-05-01 14:02:09,015 - enviro_log:          copy, textwrap, gettext, locale
+2017-05-01 14:02:09,016 - enviro_log:          struct, _struct, unittest.runner, unittest.signals
+2017-05-01 14:02:09,016 - enviro_log:          signal, platform, subprocess, _posixsubprocess
+2017-05-01 14:02:09,016 - enviro_log:          select, selectors, math, enviro
+2017-05-01 14:02:09,016 - enviro_log:          paramiko, paramiko._version, paramiko.transport, __future__
+2017-05-01 14:02:09,016 - enviro_log:          socket, _socket, hashlib, _hashlib
+2017-05-01 14:02:09,016 - enviro_log:          _blake2, _sha3, cryptography, cryptography.__about__
+2017-05-01 14:02:09,016 - enviro_log:          cryptography.hazmat, cryptography.hazmat.backends, cryptography.hazmat.backends.multibackend, cryptography.utils
+2017-05-01 14:02:09,016 - enviro_log:          binascii, inspect, ast, _ast
+2017-05-01 14:02:09,016 - enviro_log:          dis, opcode, _opcode, importlib
+2017-05-01 14:02:09,016 - enviro_log:          importlib._bootstrap, importlib._bootstrap_external, importlib.machinery, packaging
+2017-05-01 14:02:09,017 - enviro_log:          packaging.__about__, packaging.version, packaging._structures, cryptography.exceptions
+2017-05-01 14:02:09,017 - enviro_log:          cryptography.hazmat.backends.interfaces, six, cryptography.hazmat.primitives, cryptography.hazmat.primitives.ciphers
+2017-05-01 14:02:09,017 - enviro_log:          cryptography.hazmat.primitives.ciphers.base, cffi, cffi.api, cffi.lock
+2017-05-01 14:02:09,017 - enviro_log:          cffi.error, cffi.model, cryptography.hazmat.primitives.ciphers.modes, cryptography.hazmat.primitives.ciphers.algorithms
+2017-05-01 14:02:09,017 - enviro_log:          paramiko.util, paramiko.common, paramiko.py3compat, base64
+2017-05-01 14:02:09,017 - enviro_log:          paramiko.config, shlex, paramiko.auth_handler, paramiko.message
+2017-05-01 14:02:09,017 - enviro_log:          paramiko.ssh_exception, paramiko.server, paramiko.ssh_gss, pyasn1
+2017-05-01 14:02:09,017 - enviro_log:          pyasn1.type, pyasn1.type.univ, pyasn1.type.base, pyasn1.type.constraint
+2017-05-01 14:02:09,017 - enviro_log:          pyasn1.type.error, pyasn1.error, pyasn1.type.tagmap, pyasn1.type.tag
+2017-05-01 14:02:09,017 - enviro_log:          pyasn1.type.namedtype, pyasn1.compat, pyasn1.compat.octets, pyasn1.type.namedval
+2017-05-01 14:02:09,018 - enviro_log:          pyasn1.codec, pyasn1.codec.ber, pyasn1.codec.ber.eoo, pyasn1.compat.integer
+2017-05-01 14:02:09,018 - enviro_log:          pyasn1.compat.binary, pyasn1.codec.der, pyasn1.codec.der.encoder, pyasn1.codec.cer
+2017-05-01 14:02:09,018 - enviro_log:          pyasn1.codec.cer.encoder, pyasn1.type.useful, pyasn1.type.char, pyasn1.codec.ber.encoder
+2017-05-01 14:02:09,018 - enviro_log:          pyasn1.debug, pyasn1.codec.der.decoder, pyasn1.codec.cer.decoder, pyasn1.codec.ber.decoder
+2017-05-01 14:02:09,018 - enviro_log:          paramiko.channel, paramiko.file, paramiko.buffered_pipe, array
+2017-05-01 14:02:09,018 - enviro_log:          paramiko.pipe, paramiko.compress, zlib, paramiko.dsskey
+2017-05-01 14:02:09,018 - enviro_log:          cryptography.hazmat.primitives.hashes, cryptography.hazmat.primitives.serialization, cryptography.hazmat.primitives.asymmetric, cryptography.hazmat.primitives.asymmetric.dsa
+2017-05-01 14:02:09,018 - enviro_log:          cryptography.hazmat.primitives.asymmetric.ec, cryptography.hazmat.primitives.asymmetric.rsa, fractions, decimal
+2017-05-01 14:02:09,018 - enviro_log:          numbers, _decimal, cryptography.hazmat.primitives.asymmetric.utils, asn1crypto
+2017-05-01 14:02:09,018 - enviro_log:          asn1crypto.version, asn1crypto.algos, asn1crypto._errors, asn1crypto._int
+2017-05-01 14:02:09,019 - enviro_log:          asn1crypto.util, datetime, _datetime, asn1crypto._iri
+2017-05-01 14:02:09,019 - enviro_log:          encodings.idna, stringprep, unicodedata, asn1crypto._types
+2017-05-01 14:02:09,019 - enviro_log:          urllib, urllib.parse, asn1crypto._ordereddict, asn1crypto._ffi
+2017-05-01 14:02:09,019 - enviro_log:          ctypes, _ctypes, ctypes._endian, asn1crypto._perf
+2017-05-01 14:02:09,019 - enviro_log:          asn1crypto._perf._big_num_ctypes, ctypes.util, shutil, tarfile
+2017-05-01 14:02:09,019 - enviro_log:          grp, pwd, bz2, _compression
+2017-05-01 14:02:09,019 - enviro_log:          _bz2, lzma, _lzma, tempfile
+2017-05-01 14:02:09,019 - enviro_log:          random, bisect, _bisect, _random
+2017-05-01 14:02:09,019 - enviro_log:          asn1crypto.core, asn1crypto._teletex_codec, asn1crypto.parser, paramiko.ber
+2017-05-01 14:02:09,019 - enviro_log:          paramiko.pkey, paramiko.kex_gex, paramiko.kex_group1, paramiko.kex_group14
+2017-05-01 14:02:09,019 - enviro_log:          paramiko.kex_gss, paramiko.packet, hmac, paramiko.primes
+2017-05-01 14:02:09,020 - enviro_log:          paramiko.rsakey, cryptography.hazmat.primitives.asymmetric.padding, paramiko.ecdsakey, paramiko.sftp_client
+2017-05-01 14:02:09,020 - enviro_log:          paramiko.sftp, paramiko.sftp_attr, paramiko.sftp_file, paramiko.client
+2017-05-01 14:02:09,020 - enviro_log:          getpass, termios, paramiko.agent, paramiko.hostkeys
+2017-05-01 14:02:09,020 - enviro_log:          paramiko.resource, paramiko.sftp_server, paramiko.sftp_si, paramiko.sftp_handle
+2017-05-01 14:02:09,020 - enviro_log:          paramiko.proxy, pkg_resources, zipfile, importlib.util
+2017-05-01 14:02:09,020 - enviro_log:          importlib.abc, pkgutil, plistlib, xml
+2017-05-01 14:02:09,020 - enviro_log:          xml.parsers, xml.parsers.expat, pyexpat.errors, pyexpat.model
+2017-05-01 14:02:09,020 - enviro_log:          pyexpat, xml.parsers.expat.model, xml.parsers.expat.errors, email
+2017-05-01 14:02:09,020 - enviro_log:          email.parser, email.feedparser, email.errors, email._policybase
+2017-05-01 14:02:09,020 - enviro_log:          email.header, email.quoprimime, email.base64mime, email.charset
+2017-05-01 14:02:09,021 - enviro_log:          email.encoders, quopri, email.utils, email._parseaddr
+2017-05-01 14:02:09,021 - enviro_log:          calendar, six.moves, six.moves.urllib, packaging.specifiers
+2017-05-01 14:02:09,021 - enviro_log:          packaging._compat, packaging.requirements, pyparsing, packaging.markers
+2017-05-01 14:02:09,021 - enviro_log:          appdirs, cryptography.hazmat.backends.openssl, cryptography.hazmat.backends.openssl.backend, cryptography.x509
+2017-05-01 14:02:09,021 - enviro_log:          cryptography.x509.base, cryptography.x509.extensions, ipaddress, asn1crypto.keys
+2017-05-01 14:02:09,021 - enviro_log:          asn1crypto._elliptic_curve, cryptography.hazmat.primitives.constant_time, cryptography.hazmat.bindings, _cffi_backend
+2017-05-01 14:02:09,021 - enviro_log:          _constant_time.lib, _constant_time, cryptography.hazmat.bindings._constant_time, cryptography.x509.general_name
+2017-05-01 14:02:09,021 - enviro_log:          idna, idna.core, idna.idnadata, idna.intranges
+2017-05-01 14:02:09,021 - enviro_log:          cryptography.x509.name, cryptography.x509.oid, cryptography.hazmat.backends.openssl.ciphers, cryptography.hazmat.backends.openssl.cmac
+2017-05-01 14:02:09,021 - enviro_log:          cryptography.hazmat.primitives.interfaces, cryptography.hazmat.backends.openssl.dh, cryptography.hazmat.primitives.asymmetric.dh, cryptography.hazmat.backends.openssl.dsa
+2017-05-01 14:02:09,021 - enviro_log:          cryptography.hazmat.backends.openssl.utils, cryptography.hazmat.backends.openssl.ec, cryptography.hazmat.backends.openssl.encode_asn1, cryptography.hazmat.backends.openssl.decode_asn1
+2017-05-01 14:02:09,022 - enviro_log:          cryptography.hazmat.backends.openssl.hashes, cryptography.hazmat.backends.openssl.hmac, cryptography.hazmat.backends.openssl.rsa, cryptography.hazmat.backends.openssl.x509
+2017-05-01 14:02:09,022 - enviro_log:          cryptography.hazmat.bindings.openssl, cryptography.hazmat.bindings.openssl.binding, _openssl.lib, _openssl
+2017-05-01 14:02:09,022 - enviro_log:          cryptography.hazmat.bindings._openssl, cryptography.hazmat.bindings.openssl._conditional, _ssl, cryptography.hazmat.primitives.kdf
+2017-05-01 14:02:09,022 - enviro_log: ________________________________________________________
+2017-05-01 14:02:09,022 - enviro_log: ________________Server preparation began________________
+2017-05-01 14:02:17,675 - enviro_log:        Server command execution:$ apt-get install nfs-kernel-server nfs-common -y
+2017-05-01 14:02:17,676 - enviro_log.stdout: Reading package lists...
+2017-05-01 14:02:17,676 - enviro_log.stdout: Building dependency tree...
+2017-05-01 14:02:17,676 - enviro_log.stdout: Reading state information...
+2017-05-01 14:02:17,676 - enviro_log.stdout: Suggested packages:
+2017-05-01 14:02:17,677 - enviro_log.stdout:   open-iscsi watchdog
+2017-05-01 14:02:17,677 - enviro_log.stdout: The following NEW packages will be installed:
+2017-05-01 14:02:17,677 - enviro_log.stdout:   nfs-common nfs-kernel-server
+2017-05-01 14:02:17,677 - enviro_log.stdout: 0 upgraded, 2 newly installed, 0 to remove and 5 not upgraded.
+2017-05-01 14:02:17,677 - enviro_log.stdout: Need to get 0 B/275 kB of archives.
+2017-05-01 14:02:17,677 - enviro_log.stdout: After this operation, 1,232 kB of additional disk space will be used.
+2017-05-01 14:02:17,678 - enviro_log.stdout: Selecting previously unselected package nfs-common.
+2017-05-01 14:02:17,678 - enviro_log.stdout: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 237350 files and directories currently installed.)
+2017-05-01 14:02:17,678 - enviro_log.stdout: Preparing to unpack .../nfs-common_1%3a1.2.8-9.2ubuntu2_amd64.deb ...
+2017-05-01 14:02:17,678 - enviro_log.stdout: Unpacking nfs-common (1:1.2.8-9.2ubuntu2) ...
+2017-05-01 14:02:17,678 - enviro_log.stdout: Selecting previously unselected package nfs-kernel-server.
+2017-05-01 14:02:17,678 - enviro_log.stdout: Preparing to unpack .../nfs-kernel-server_1%3a1.2.8-9.2ubuntu2_amd64.deb ...
+2017-05-01 14:02:17,678 - enviro_log.stdout: Unpacking nfs-kernel-server (1:1.2.8-9.2ubuntu2) ...
+2017-05-01 14:02:17,679 - enviro_log.stdout: Processing triggers for ureadahead (0.100.0-19) ...
+2017-05-01 14:02:17,679 - enviro_log.stdout: Setting up nfs-common (1:1.2.8-9.2ubuntu2) ...
+2017-05-01 14:02:17,679 - enviro_log.stdout: Setting up nfs-kernel-server (1:1.2.8-9.2ubuntu2) ...
+2017-05-01 14:02:17,679 - enviro_log.stdout: Processing triggers for systemd (232-21ubuntu3) ...
+2017-05-01 14:02:17,679 - enviro_log.stdout: Processing triggers for man-db (2.7.6.1-2) ...
+2017-05-01 14:02:17,679 - enviro_log.stderr: kirgenvall: 
+2017-05-01 14:02:17,698 - enviro_log:        Server command execution:$ mkdir -p /home/kirgenvall/test_nfs /home/kirgenvall/test_ro_nfs
+2017-05-01 14:02:17,721 - enviro_log:        Server command execution:$ bash -c '> /home/kirgenvall/test_nfs/edition_check'
+2017-05-01 14:02:17,742 - enviro_log:        Server command execution:$ bash -c '> /home/kirgenvall/test_ro_nfs/edition_check'
+2017-05-01 14:02:17,760 - enviro_log:        Server command execution:$ bash -c "echo '/home/kirgenvall/test_nfs 192.168.56.5(rw,sync,no_root_squash,no_subtree_check)' >> /etc/exports"
+2017-05-01 14:02:17,784 - enviro_log:        Server command execution:$ bash -c "echo '/home/kirgenvall/test_ro_nfs 192.168.56.5(ro,sync,no_subtree_check)' >> /etc/exports"
+2017-05-01 14:02:17,804 - enviro_log:        Server command execution:$ exportfs -a
+2017-05-01 14:02:17,804 - enviro_log.stderr: exportfs: duplicated export entries:
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_nfs
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_nfs
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: duplicated export entries:
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_ro_nfs
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_ro_nfs
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: duplicated export entries:
+2017-05-01 14:02:17,805 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_nfs
+2017-05-01 14:02:17,806 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_nfs
+2017-05-01 14:02:17,806 - enviro_log.stderr: exportfs: duplicated export entries:
+2017-05-01 14:02:17,806 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_ro_nfs
+2017-05-01 14:02:17,806 - enviro_log.stderr: exportfs: 	192.168.56.5:/home/kirgenvall/test_ro_nfs
+2017-05-01 14:02:18,010 - enviro_log:        Server command execution:$ service nfs-kernel-server restart
+2017-05-01 14:02:18,011 - enviro_log: ________________________________________________________
+2017-05-01 14:02:18,011 - enviro_log: ________________Client Preparation began________________
+2017-05-01 14:02:18,154 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:02:18,480 - enviro_log:        Client command execution:$ apt-get install nfs-kernel-server nfs-common -y
+2017-05-01 14:02:36,156 - enviro_log.stdout: Reading package lists...
+2017-05-01 14:02:36,156 - enviro_log.stdout: Building dependency tree...
+2017-05-01 14:02:36,157 - enviro_log.stdout: Reading state information...
+2017-05-01 14:02:36,157 - enviro_log.stdout: Suggested packages:
+2017-05-01 14:02:36,157 - enviro_log.stdout:   open-iscsi watchdog
+2017-05-01 14:02:36,157 - enviro_log.stdout: The following NEW packages will be installed:
+2017-05-01 14:02:36,158 - enviro_log.stdout:   nfs-common nfs-kernel-server
+2017-05-01 14:02:36,158 - enviro_log.stdout: 0 upgraded, 2 newly installed, 0 to remove and 192 not upgraded.
+2017-05-01 14:02:36,158 - enviro_log.stdout: Need to get 0 B/275 kB of archives.
+2017-05-01 14:02:36,158 - enviro_log.stdout: After this operation, 1.232 kB of additional disk space will be used.
+2017-05-01 14:02:36,158 - enviro_log.stdout: Selecting previously unselected package nfs-common.
+2017-05-01 14:02:36,158 - enviro_log.stdout: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 210638 files and directories currently installed.)
+2017-05-01 14:02:36,158 - enviro_log.stdout: Preparing to unpack .../0-nfs-common_1%3a1.2.8-9.2ubuntu1_amd64.deb ...
+2017-05-01 14:02:36,158 - enviro_log.stdout: Unpacking nfs-common (1:1.2.8-9.2ubuntu1) ...
+2017-05-01 14:02:36,158 - enviro_log.stdout: Selecting previously unselected package nfs-kernel-server.
+2017-05-01 14:02:36,159 - enviro_log.stdout: Preparing to unpack .../1-nfs-kernel-server_1%3a1.2.8-9.2ubuntu1_amd64.deb ...
+2017-05-01 14:02:36,159 - enviro_log.stdout: Unpacking nfs-kernel-server (1:1.2.8-9.2ubuntu1) ...
+2017-05-01 14:02:36,159 - enviro_log.stdout: Processing triggers for ureadahead (0.100.0-19) ...
+2017-05-01 14:02:36,159 - enviro_log.stdout: Setting up nfs-common (1:1.2.8-9.2ubuntu1) ...
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: unable to initialize frontend: Dialog
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: falling back to frontend: Readline
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: unable to initialize frontend: Dialog
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: falling back to frontend: Readline
+2017-05-01 14:02:36,159 - enviro_log.stdout: Setting up nfs-kernel-server (1:1.2.8-9.2ubuntu1) ...
+2017-05-01 14:02:36,159 - enviro_log.stdout: debconf: unable to initialize frontend: Dialog
+2017-05-01 14:02:36,160 - enviro_log.stdout: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-05-01 14:02:36,160 - enviro_log.stdout: debconf: falling back to frontend: Readline
+2017-05-01 14:02:36,160 - enviro_log.stdout: debconf: unable to initialize frontend: Dialog
+2017-05-01 14:02:36,160 - enviro_log.stdout: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-05-01 14:02:36,160 - enviro_log.stdout: debconf: falling back to frontend: Readline
+2017-05-01 14:02:36,160 - enviro_log.stdout: Processing triggers for systemd (231-9git1) ...
+2017-05-01 14:02:36,160 - enviro_log.stdout: Processing triggers for man-db (2.7.5-1) ...
+2017-05-01 14:02:36,160 - enviro_log.stderr: ebconf: unable to initialize frontend: Dialog
+2017-05-01 14:02:36,160 - enviro_log.stderr: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-05-01 14:02:36,161 - enviro_log.stderr: debconf: falling back to frontend: Readline
+2017-05-01 14:02:36,161 - enviro_log.stderr: debconf: unable to initialize frontend: Readline
+2017-05-01 14:02:36,161 - enviro_log.stderr: debconf: (This frontend requires a controlling tty.)
+2017-05-01 14:02:36,161 - enviro_log.stderr: debconf: falling back to frontend: Teletype
+2017-05-01 14:02:36,161 - enviro_log.stderr: dpkg-preconfigure: unable to re-open stdin: 
+2017-05-01 14:02:36,208 - enviro_log:        Client command execution:$ service nfs-kernel-server start
+2017-05-01 14:02:36,745 - enviro_log:        Client command execution:$ mkdir -p /mnt/test_nfs /mnt/test_ro_nfs
+2017-05-01 14:02:36,855 - enviro_log:        Client command execution:$ mount 192.168.56.1:/home/kirgenvall/test_nfs /mnt/test_nfs
+2017-05-01 14:02:37,055 - enviro_log:        Client command execution:$ mount 192.168.56.1:/home/kirgenvall/test_ro_nfs /mnt/test_ro_nfs
+2017-05-01 14:02:37,140 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:02:37,150 - enviro_log: ________________________________________________________
+2017-05-01 14:02:37,150 - enviro_log: _________________Tests execution began__________________
+2017-05-01 14:02:37,318 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:02:38,171 - enviro_log:        Client command execution:$ bash -c '> /mnt/test_ro_nfs/creation_check'
+2017-05-01 14:04:04,860 - enviro_log.stderr: bash: /mnt/test_ro_nfs/creation_check: Read-only file system
+2017-05-01 14:04:04,861 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:05,041 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:05,339 - enviro_log:        Client command execution:$ bash -c 'echo check >> /mnt/test_ro_nfs/edition_check'
+2017-05-01 14:04:05,396 - enviro_log.stderr: bash: /mnt/test_ro_nfs/edition_check: Read-only file system
+2017-05-01 14:04:05,397 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:05,593 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:06,034 - enviro_log:        Client command execution:$ rm /mnt/test_nfs/creation_check
+2017-05-01 14:04:06,132 - enviro_log.stderr: m: cannot remove '/mnt/test_nfs/creation_check': No such file or directory
+2017-05-01 14:04:06,132 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:06,323 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:06,619 - enviro_log:        Client command execution:$ bash -c '> /mnt/test_nfs/creation_check'
+2017-05-01 14:04:06,680 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:06,885 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:07,310 - enviro_log:        Client command execution:$ bash -c 'echo check >> /mnt/test_nfs/edition_check'
+2017-05-01 14:04:07,385 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:07,570 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:07,873 - enviro_log:        Client command execution:$ rm /mnt/test_nfs/creation_check
+2017-05-01 14:04:07,972 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:08,162 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:08,586 - enviro_log:        Client command execution:$ bash -c "useradd test_user; echo -e 'test
+test' | passwd test_user"
+2017-05-01 14:04:08,697 - enviro_log.stderr: Enter new UNIX password: Retype new UNIX password: passwd: password updated successfully
+2017-05-01 14:04:08,697 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:08,883 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:09,177 - enviro_log:        Client command execution:$ bash -c 'echo check >> /mnt/test_nfs/edition_check'
+2017-05-01 14:04:09,300 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:09,473 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:09,904 - enviro_log:        Client command execution:$ bash -c "userdel test_user"
+2017-05-01 14:04:10,016 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:10,208 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:10,507 - enviro_log:        Client command execution:$ bash -c "useradd test_user; echo -e 'test
+test' | passwd test_user"
+2017-05-01 14:04:10,672 - enviro_log.stderr: Enter new UNIX password: Retype new UNIX password: passwd: password updated successfully
+2017-05-01 14:04:10,673 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:10,856 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:11,337 - enviro_log:        Client command execution:$ runuser -l test_user -c "bash -c 'echo check >> /mnt/test_nfs/edition_check'"
+2017-05-01 14:04:12,487 - enviro_log.stderr: nuser: warning: cannot change directory to /home/test_user: No such file or directory
+2017-05-01 14:04:12,488 - enviro_log.stderr: bash: /mnt/test_nfs/edition_check: Permission denied
+2017-05-01 14:04:12,489 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:12,625 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:13,050 - enviro_log:        Client command execution:$ bash -c "userdel test_user"
+2017-05-01 14:04:13,188 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:13,189 - enviro_log: ________________________________________________________
+2017-05-01 14:04:13,189 - enviro_log: ______________Client state rollback began_______________
+2017-05-01 14:04:13,335 - enviro_log: _______SSH virtual@192.168.56.5 connection opened_______
+2017-05-01 14:04:13,791 - enviro_log:        Client command execution:$ umount /mnt/test_ro_nfs
+2017-05-01 14:04:13,919 - enviro_log:        Client command execution:$ umount /mnt/test_nfs
+2017-05-01 14:04:14,045 - enviro_log:        Client command execution:$ rm -r /mnt/test_ro_nfs /mnt/test_nfs
+2017-05-01 14:04:14,136 - enviro_log:        Client command execution:$ service nfs-kernel-server stop
+2017-05-01 14:04:14,870 - enviro_log:        Client command execution:$ apt-get remove nfs-kernel-server nfs-common -y
+2017-05-01 14:04:27,882 - enviro_log.stdout: Reading package lists...
+2017-05-01 14:04:27,882 - enviro_log.stdout: Building dependency tree...
+2017-05-01 14:04:27,883 - enviro_log.stdout: Reading state information...
+2017-05-01 14:04:27,883 - enviro_log.stdout: The following packages were automatically installed and are no longer required:
+2017-05-01 14:04:27,883 - enviro_log.stdout:   keyutils libnfsidmap2 libtirpc1 rpcbind
+2017-05-01 14:04:27,884 - enviro_log.stdout: Use 'sudo apt autoremove' to remove them.
+2017-05-01 14:04:27,884 - enviro_log.stdout: The following packages will be REMOVED:
+2017-05-01 14:04:27,884 - enviro_log.stdout:   nfs-common nfs-kernel-server
+2017-05-01 14:04:27,884 - enviro_log.stdout: 0 upgraded, 0 newly installed, 2 to remove and 192 not upgraded.
+2017-05-01 14:04:27,884 - enviro_log.stdout: After this operation, 1.232 kB disk space will be freed.
+2017-05-01 14:04:27,884 - enviro_log.stdout: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 210742 files and directories currently installed.)
+2017-05-01 14:04:27,885 - enviro_log.stdout: Removing nfs-kernel-server (1:1.2.8-9.2ubuntu1) ...
+2017-05-01 14:04:27,885 - enviro_log.stdout: Removing nfs-common (1:1.2.8-9.2ubuntu1) ...
+2017-05-01 14:04:27,885 - enviro_log.stdout: Processing triggers for man-db (2.7.5-1) ...
+2017-05-01 14:04:27,885 - enviro_log: _______SSH virtual@192.168.56.5 connection closed_______
+2017-05-01 14:04:27,886 - enviro_log: ________________________________________________________
+2017-05-01 14:04:27,886 - enviro_log: ______________Server state rollback began_______________
+2017-05-01 14:04:28,164 - enviro_log:        Server command execution:$ service nfs-kernel-server stop
+2017-05-01 14:04:28,177 - enviro_log:        Server command execution:$ sed -i '$ d' /etc/exports
+2017-05-01 14:04:28,190 - enviro_log:        Server command execution:$ sed -i '$ d' /etc/exports
+2017-05-01 14:04:28,202 - enviro_log:        Server command execution:$ rm -r /home/kirgenvall/test_nfs /home/kirgenvall/test_ro_nfs
+2017-05-01 14:04:34,195 - enviro_log:        Server command execution:$ apt-get remove nfs-kernel-server nfs-common -y
+2017-05-01 14:04:34,196 - enviro_log.stdout: Reading package lists...
+2017-05-01 14:04:34,196 - enviro_log.stdout: Building dependency tree...
+2017-05-01 14:04:34,196 - enviro_log.stdout: Reading state information...
+2017-05-01 14:04:34,196 - enviro_log.stdout: The following packages were automatically installed and are no longer required:
+2017-05-01 14:04:34,196 - enviro_log.stdout:   keyutils libnfsidmap2 libtirpc1 rpcbind
+2017-05-01 14:04:34,196 - enviro_log.stdout: Use 'sudo apt autoremove' to remove them.
+2017-05-01 14:04:34,196 - enviro_log.stdout: The following packages will be REMOVED:
+2017-05-01 14:04:34,196 - enviro_log.stdout:   nfs-common nfs-kernel-server
+2017-05-01 14:04:34,196 - enviro_log.stdout: 0 upgraded, 0 newly installed, 2 to remove and 5 not upgraded.
+2017-05-01 14:04:34,197 - enviro_log.stdout: After this operation, 1,232 kB disk space will be freed.
+2017-05-01 14:04:34,197 - enviro_log.stdout: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 237453 files and directories currently installed.)
+2017-05-01 14:04:34,197 - enviro_log.stdout: Removing nfs-kernel-server (1:1.2.8-9.2ubuntu2) ...
+2017-05-01 14:04:34,197 - enviro_log.stdout: Removing nfs-common (1:1.2.8-9.2ubuntu2) ...
+2017-05-01 14:04:34,197 - enviro_log.stdout: Processing triggers for man-db (2.7.6.1-2) ...
