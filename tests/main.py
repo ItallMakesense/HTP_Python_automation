@@ -9,16 +9,18 @@ import subprocess
 if platform.system() != 'Linux':
     sys.exit('Your system is not Linux. Test aborted.')
 
+path = os.getcwd()
+
 env_log = logging.getLogger("enviro_log")
 env_log.setLevel(logging.INFO)
-env_log_file = logging.FileHandler(os.getcwd()+'/enviro.log')
+env_log_file = logging.FileHandler(path + '/enviro.log')
 env_formatter = logging.Formatter("%(asctime)s - %(name)s: %(message)s")
 env_log_file.setFormatter(env_formatter)
 env_log.addHandler(env_log_file)
 
 tests_log = logging.getLogger("tests_log")
 tests_log.setLevel(logging.INFO)
-tests_log_file = logging.FileHandler(os.getcwd()+'/tests.log')
+tests_log_file = logging.FileHandler(path + '/tests.log')
 tests_formatter = logging.Formatter("%(asctime)s - %(name)s: %(message)s")
 tests_log_file.setFormatter(tests_formatter)
 tests_log.addHandler(tests_log_file)
@@ -58,19 +60,21 @@ env_log.info("________________________________________________________")
 env_log.info("________________Client Preparation began________________")
 enviro.client_nfs(enviro.nfs_remote_commands)
 
-test_names = ['roTest', 'rwTest', 'ownTest']
-suite = unittest.TestSuite()
 loader = unittest.defaultTestLoader
-for test in test_names:
-    tests_log.info("{} loading...".format(test))
-    testCase = loader.loadTestsFromModule(__import__(test))
-    tests_log.info("{} loaded.".format(test))
-    suite.addTest(testCase)
-    tests_log.info("{} added to the test suite.".format(test))
+suite = loader.discover(path, pattern='*Test.py')
+# test_names = ['roTest', 'rwTest', 'ownTest']
+# suite = unittest.TestSuite()
+# for test in test_names:
+#     tests_log.info("{} loading...".format(test))
+#     testCase = loader.loadTestsFromModule(__import__(test))
+#     tests_log.info("{} loaded.".format(test))
+#     suite.addTest(testCase)
+#     tests_log.info("{} added to the test suite.".format(test))
 
 env_log.info("________________________________________________________")
 env_log.info("_________________Tests execution began__________________")
 tests_log.info("_________________Tests execution began__________________")
+
 unittest.TextTestRunner(verbosity=2).run(suite)
 
 env_log.info("________________________________________________________")
