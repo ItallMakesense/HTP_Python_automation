@@ -1,3 +1,14 @@
+"""
+Function that translates integers to words.
+
+More specifically, for a given positive integer it converts into
+its English representation.
+
+Example:
+int_to_words(12356) # => 'twelve thousand three hundred and fifty six'
+
+"""
+
 units = {1: 'one', 2: 'two', 3: 'three',
          4: 'four', 5: 'five', 6: 'six',
          7: 'seven', 8: 'eight', 9: 'nine'}

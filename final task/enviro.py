@@ -45,20 +45,11 @@ def client_connect(function):
         return done
     return wrapper
 
-# def pretty_log_line(log, item):
-#     if '\n' in item:
-#         for line in item.split('\n'):
-#             pretty_log_line(log, line)
-#     else:
-#         log(item)
-
 def sudo_command_executor(command):
     can = subprocess.PIPE
     proc = subprocess.Popen("sudo -S {}".format(command), shell=True, stdin=can, stdout=can, stderr=can)
     outs, errors = proc.communicate(input="{}\n".format(server_password).encode())
     env_log.info("       Server command execution:$ {}".format(command))
-    # pretty_log_line(env_log_o.info, outs.decode())
-    # pretty_log_line(env_log_e.info, errors.decode())
     for outline in outs.decode().split("\n"):
         if outline:
             env_log_o.info(outline)

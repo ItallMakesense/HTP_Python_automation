@@ -1,5 +1,21 @@
 #!bin/bash
 
+"""
+Lnx6D.sh - Schedules Apache to start every week day at 11AM and
+stop the service at 9PM that day.
+Lnx6W.sh - Schedules Apache to start every weekend at noon and
+stop the service at 1 hour before midnight that day.
+
+Checks Apache server installed: if no – script install it
+(on any Linux system you know).
+Disables Apache server auto start.
+Informs (with screen message) if previously installed Apache server
+was removed from the system by someone.
+
+Script take an optional argument as IP; stores logs in /tmp directory
+for remote computer.
+"""
+
 #Path to logs
 path=/tmp/logs
 #Ubuntu

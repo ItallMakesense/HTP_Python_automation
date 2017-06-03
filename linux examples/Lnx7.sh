@@ -1,5 +1,13 @@
 #!/bin/bash
 
+"""
+Performs automated installation of Java 8 Runtime Environment (JRE)
+and latest Python 2.x from the official web site.
+
+After all installations prints out to the terminal Java and Python
+versions and installation results.
+"""
+
 kill -9 $(pidof java) 2>/dev/null
 kill -9 $(pidof python) 2>/dev/null
 

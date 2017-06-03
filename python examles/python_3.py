@@ -1,3 +1,18 @@
+"""
+Function that takes in an input string and a dictionary array and
+return the values from the dictionary, that start with the input string.
+
+If there are more than 5 matches, restricts the output to the first 5 results.
+If there are no matches, returns an empty array.
+Non-letters not counts.
+
+Example:
+autocomplete('ai', ['airplane','airport','apple','ball'])
+
+Result:
+['airplane','airport']
+"""
+
 import re
 
 

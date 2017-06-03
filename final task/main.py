@@ -51,8 +51,6 @@ for num, mod in enumerate(sys.modules.keys()):
             env_log.info("         {}".format(", ".join(modules_row)))
         modules_row = []
 
-# Make Client information here
-
 env_log.info("________________________________________________________")
 env_log.info("________________Server preparation began________________")
 enviro.server_nfs(enviro.nfs_setup_commands)
@@ -62,14 +60,6 @@ enviro.client_nfs(enviro.nfs_remote_commands)
 
 loader = unittest.defaultTestLoader
 suite = loader.discover(path, pattern='*Test.py')
-# test_names = ['roTest', 'rwTest', 'ownTest']
-# suite = unittest.TestSuite()
-# for test in test_names:
-#     tests_log.info("{} loading...".format(test))
-#     testCase = loader.loadTestsFromModule(__import__(test))
-#     tests_log.info("{} loaded.".format(test))
-#     suite.addTest(testCase)
-#     tests_log.info("{} added to the test suite.".format(test))
 
 env_log.info("________________________________________________________")
 env_log.info("_________________Tests execution began__________________")
@@ -83,6 +73,3 @@ enviro.client_nfs(enviro.end_remote_commands)
 env_log.info("________________________________________________________")
 env_log.info("______________Server state rollback began_______________")
 enviro.server_nfs(enviro.end_nfs_commands)
-
-if __name__ == "__main__":
-    pass
