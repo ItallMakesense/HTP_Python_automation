@@ -1,0 +1,219 @@
+2017-06-22 10:48:29,500 - environment.log - INFO: Server command execution:$ pip install paramiko
+2017-06-22 10:48:30,673 - environment.log - INFO: "paramiko" module successfully installed.
+2017-06-22 10:48:30,674 - environment.log - INFO: _____________________Server information_____________________
+2017-06-22 10:48:30,674 - environment.log - INFO: sysname: Linux
+2017-06-22 10:48:30,674 - environment.log - INFO: nodename: engine
+2017-06-22 10:48:30,675 - environment.log - INFO: release: 4.10.0-24-generic
+2017-06-22 10:48:30,675 - environment.log - INFO: version: #28-Ubuntu SMP Wed Jun 14 08:14:34 UTC 2017
+2017-06-22 10:48:30,675 - environment.log - INFO: machine: x86_64
+2017-06-22 10:48:30,676 - environment.log - INFO: python: 3.6.0.final.0
+2017-06-22 10:48:30,676 - environment.log - INFO: modules: builtins, sys, _frozen_importlib, _imp, _warnings, _thread, _weakref, _frozen_importlib_external, _io, marshal, posix, zipimport, encodings, codecs, _codecs, encodings.aliases, encodings.utf_8, _signal, __main__, encodings.latin_1, io, abc, _weakrefset, site, os, errno, stat, _stat, posixpath, genericpath, os.path, _collections_abc, _sitebuiltins, sysconfig, _sysconfigdata_m_linux_x86_64-linux-gnu, _bootlocale, _locale, encodings.cp437, sub, platform, collections, operator, _operator, keyword, heapq, _heapq, itertools, reprlib, _collections, re, enum, types, functools, _functools, weakref, collections.abc, sre_compile, _sre, sre_parse, sre_constants, copyreg, subprocess, time, signal, warnings, _posixsubprocess, select, selectors, math, threading, traceback, linecache, tokenize, token, socket, _socket, encodings.idna, stringprep, unicodedata, unittest, unittest.result, unittest.util, unittest.case, difflib, logging, string, _string, atexit, pprint, contextlib, unittest.suite, unittest.loader, fnmatch, unittest.main, argparse, copy, textwrap, gettext, locale, struct, _struct, unittest.runner, unittest.signals
+2017-06-22 10:48:31,491 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:48:31,491 - environment.log - INFO: Client command execution:$ python -c "from platform import linux_distribution; print(linux_distribution(full_distribution_name=0)[0])"
+2017-06-22 10:48:32,063 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:48:32,063 - environment.log - INFO: ============================================================
+2017-06-22 10:48:32,063 - environment.log - INFO: ==================Server preparation began==================
+2017-06-22 10:48:32,065 - environment.log - INFO: Server command execution:$ apt-get install nfs-kernel-server nfs-common -y
+2017-06-22 10:48:40,388 - environment.log - DEBUG: Reading package lists...
+2017-06-22 10:48:40,388 - environment.log - DEBUG: Building dependency tree...
+2017-06-22 10:48:40,388 - environment.log - DEBUG: Reading state information...
+2017-06-22 10:48:40,388 - environment.log - DEBUG: The following packages were automatically installed and are no longer required:
+2017-06-22 10:48:40,389 - environment.log - DEBUG:   libedataserverui-1.2-1 qtdeclarative5-accounts-plugin
+2017-06-22 10:48:40,389 - environment.log - DEBUG:   qtdeclarative5-ubuntu-download-manager0.1 unity-webapps-qml
+2017-06-22 10:48:40,389 - environment.log - DEBUG: Use 'sudo apt autoremove' to remove them.
+2017-06-22 10:48:40,389 - environment.log - DEBUG: Suggested packages:
+2017-06-22 10:48:40,389 - environment.log - DEBUG:   open-iscsi watchdog
+2017-06-22 10:48:40,389 - environment.log - DEBUG: The following NEW packages will be installed:
+2017-06-22 10:48:40,390 - environment.log - DEBUG:   nfs-common nfs-kernel-server
+2017-06-22 10:48:40,390 - environment.log - DEBUG: 0 upgraded, 2 newly installed, 0 to remove and 9 not upgraded.
+2017-06-22 10:48:40,390 - environment.log - DEBUG: Need to get 0 B/275 kB of archives.
+2017-06-22 10:48:40,390 - environment.log - DEBUG: After this operation, 1232 kB of additional disk space will be used.
+2017-06-22 10:48:40,390 - environment.log - DEBUG: Selecting previously unselected package nfs-common.
+2017-06-22 10:48:40,390 - environment.log - DEBUG: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 251478 files and directories currently installed.)
+2017-06-22 10:48:40,390 - environment.log - DEBUG: Preparing to unpack .../nfs-common_1%3a1.2.8-9.2ubuntu2_amd64.deb ...
+2017-06-22 10:48:40,391 - environment.log - DEBUG: Unpacking nfs-common (1:1.2.8-9.2ubuntu2) ...
+2017-06-22 10:48:40,391 - environment.log - DEBUG: Selecting previously unselected package nfs-kernel-server.
+2017-06-22 10:48:40,391 - environment.log - DEBUG: Preparing to unpack .../nfs-kernel-server_1%3a1.2.8-9.2ubuntu2_amd64.deb ...
+2017-06-22 10:48:40,391 - environment.log - DEBUG: Unpacking nfs-kernel-server (1:1.2.8-9.2ubuntu2) ...
+2017-06-22 10:48:40,391 - environment.log - DEBUG: Processing triggers for ureadahead (0.100.0-19) ...
+2017-06-22 10:48:40,391 - environment.log - DEBUG: Setting up nfs-common (1:1.2.8-9.2ubuntu2) ...
+2017-06-22 10:48:40,392 - environment.log - DEBUG: Setting up nfs-kernel-server (1:1.2.8-9.2ubuntu2) ...
+2017-06-22 10:48:40,392 - environment.log - DEBUG: Processing triggers for systemd (232-21ubuntu3) ...
+2017-06-22 10:48:40,392 - environment.log - DEBUG: Processing triggers for man-db (2.7.6.1-2) ...
+2017-06-22 10:48:40,394 - environment.log - INFO: Server command execution:$ mkdir -p /home/kirgenvall/test_nfs /home/kirgenvall/test_ro_nfs
+2017-06-22 10:48:40,407 - environment.log - INFO: Server command execution:$ bash -c '> /home/kirgenvall/test_nfs/edition_check'
+2017-06-22 10:48:40,418 - environment.log - INFO: Server command execution:$ bash -c '> /home/kirgenvall/test_ro_nfs/edition_check'
+2017-06-22 10:48:40,430 - environment.log - INFO: Server command execution:$ bash -c "echo '/home/kirgenvall/test_nfs 192.168.1.3(rw,sync,no_root_squash)' >> /etc/exports"
+2017-06-22 10:48:40,441 - environment.log - INFO: Server command execution:$ bash -c "echo '/home/kirgenvall/test_ro_nfs 192.168.1.3(ro,sync)' >> /etc/exports"
+2017-06-22 10:48:40,455 - environment.log - INFO: Server command execution:$ exportfs -a
+2017-06-22 10:48:40,464 - environment.log - ERROR: exportfs: /etc/exports [1]: Neither 'subtree_check' or 'no_subtree_check' specified for export "192.168.1.3:/home/kirgenvall/test_nfs".
+2017-06-22 10:48:40,465 - environment.log - ERROR:   Assuming default behaviour ('no_subtree_check').
+2017-06-22 10:48:40,465 - environment.log - ERROR:   NOTE: this default has changed since nfs-utils version 1.0.x
+2017-06-22 10:48:40,465 - environment.log - ERROR: exportfs: /etc/exports [2]: Neither 'subtree_check' or 'no_subtree_check' specified for export "192.168.1.3:/home/kirgenvall/test_ro_nfs".
+2017-06-22 10:48:40,465 - environment.log - ERROR:   Assuming default behaviour ('no_subtree_check').
+2017-06-22 10:48:40,465 - environment.log - ERROR:   NOTE: this default has changed since nfs-utils version 1.0.x
+2017-06-22 10:48:40,467 - environment.log - INFO: Server command execution:$ service nfs-kernel-server restart
+2017-06-22 10:48:40,728 - environment.log - INFO: ============================================================
+2017-06-22 10:48:40,728 - environment.log - INFO: ==================Client preparation began==================
+2017-06-22 10:48:40,811 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:48:40,811 - environment.log - INFO: Client command execution:$ apt-get install nfs-kernel-server nfs-common -y
+2017-06-22 10:48:59,378 - environment.log - DEBUG: Reading package lists...
+2017-06-22 10:48:59,378 - environment.log - DEBUG: Building dependency tree...
+2017-06-22 10:48:59,380 - environment.log - DEBUG: Reading state information...
+2017-06-22 10:48:59,380 - environment.log - DEBUG: The following packages were automatically installed and are no longer required:
+2017-06-22 10:48:59,380 - environment.log - DEBUG:   libbonobo2-0 libbonobo2-common libgnome-2-0 libgnome2-common libgnomevfs2-0
+2017-06-22 10:48:59,381 - environment.log - DEBUG:   libgnomevfs2-common liborbit-2-0 linux-headers-4.8.0-46
+2017-06-22 10:48:59,381 - environment.log - DEBUG:   linux-headers-4.8.0-46-generic linux-headers-4.8.0-49
+2017-06-22 10:48:59,381 - environment.log - DEBUG:   linux-headers-4.8.0-49-generic linux-image-4.8.0-46-generic
+2017-06-22 10:48:59,381 - environment.log - DEBUG:   linux-image-4.8.0-49-generic linux-image-extra-4.8.0-46-generic
+2017-06-22 10:48:59,381 - environment.log - DEBUG:   linux-image-extra-4.8.0-49-generic
+2017-06-22 10:48:59,381 - environment.log - DEBUG: Use 'sudo apt autoremove' to remove them.
+2017-06-22 10:48:59,382 - environment.log - DEBUG: Suggested packages:
+2017-06-22 10:48:59,382 - environment.log - DEBUG:   open-iscsi watchdog
+2017-06-22 10:48:59,382 - environment.log - DEBUG: The following NEW packages will be installed:
+2017-06-22 10:48:59,382 - environment.log - DEBUG:   nfs-common nfs-kernel-server
+2017-06-22 10:48:59,382 - environment.log - DEBUG: 0 upgraded, 2 newly installed, 0 to remove and 227 not upgraded.
+2017-06-22 10:48:59,383 - environment.log - DEBUG: Need to get 0 B/275 kB of archives.
+2017-06-22 10:48:59,383 - environment.log - DEBUG: After this operation, 1.232 kB of additional disk space will be used.
+2017-06-22 10:48:59,383 - environment.log - DEBUG: Selecting previously unselected package nfs-common.
+2017-06-22 10:48:59,384 - environment.log - DEBUG: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 277684 files and directories currently installed.)
+2017-06-22 10:48:59,384 - environment.log - DEBUG: Preparing to unpack .../0-nfs-common_1%3a1.2.8-9.2ubuntu1_amd64.deb ...
+2017-06-22 10:48:59,384 - environment.log - DEBUG: Unpacking nfs-common (1:1.2.8-9.2ubuntu1) ...
+2017-06-22 10:48:59,385 - environment.log - DEBUG: Selecting previously unselected package nfs-kernel-server.
+2017-06-22 10:48:59,385 - environment.log - DEBUG: Preparing to unpack .../1-nfs-kernel-server_1%3a1.2.8-9.2ubuntu1_amd64.deb ...
+2017-06-22 10:48:59,385 - environment.log - DEBUG: Unpacking nfs-kernel-server (1:1.2.8-9.2ubuntu1) ...
+2017-06-22 10:48:59,386 - environment.log - DEBUG: Processing triggers for ureadahead (0.100.0-19) ...
+2017-06-22 10:48:59,386 - environment.log - DEBUG: Setting up nfs-common (1:1.2.8-9.2ubuntu1) ...
+2017-06-22 10:48:59,386 - environment.log - DEBUG: debconf: unable to initialize frontend: Dialog
+2017-06-22 10:48:59,386 - environment.log - DEBUG: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-06-22 10:48:59,386 - environment.log - DEBUG: debconf: falling back to frontend: Readline
+2017-06-22 10:48:59,386 - environment.log - DEBUG: debconf: unable to initialize frontend: Dialog
+2017-06-22 10:48:59,386 - environment.log - DEBUG: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-06-22 10:48:59,387 - environment.log - DEBUG: debconf: falling back to frontend: Readline
+2017-06-22 10:48:59,387 - environment.log - DEBUG: Setting up nfs-kernel-server (1:1.2.8-9.2ubuntu1) ...
+2017-06-22 10:48:59,387 - environment.log - DEBUG: debconf: unable to initialize frontend: Dialog
+2017-06-22 10:48:59,387 - environment.log - DEBUG: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-06-22 10:48:59,387 - environment.log - DEBUG: debconf: falling back to frontend: Readline
+2017-06-22 10:48:59,387 - environment.log - DEBUG: debconf: unable to initialize frontend: Dialog
+2017-06-22 10:48:59,387 - environment.log - DEBUG: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-06-22 10:48:59,388 - environment.log - DEBUG: debconf: falling back to frontend: Readline
+2017-06-22 10:48:59,388 - environment.log - DEBUG: Processing triggers for systemd (231-9git1) ...
+2017-06-22 10:48:59,388 - environment.log - DEBUG: Processing triggers for man-db (2.7.5-1) ...
+2017-06-22 10:48:59,388 - environment.log - ERROR: ebconf: unable to initialize frontend: Dialog
+2017-06-22 10:48:59,388 - environment.log - ERROR: debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+2017-06-22 10:48:59,388 - environment.log - ERROR: debconf: falling back to frontend: Readline
+2017-06-22 10:48:59,389 - environment.log - ERROR: debconf: unable to initialize frontend: Readline
+2017-06-22 10:48:59,389 - environment.log - ERROR: debconf: (This frontend requires a controlling tty.)
+2017-06-22 10:48:59,389 - environment.log - ERROR: debconf: falling back to frontend: Teletype
+2017-06-22 10:48:59,389 - environment.log - ERROR: dpkg-preconfigure: unable to re-open stdin: 
+2017-06-22 10:48:59,389 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:48:59,474 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:48:59,475 - environment.log - INFO: Client command execution:$ service nfs-kernel-server start
+2017-06-22 10:49:00,394 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:49:00,533 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:49:00,534 - environment.log - INFO: Client command execution:$ mkdir -p /mnt/test_nfs /mnt/test_ro_nfs
+2017-06-22 10:49:01,035 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:49:01,249 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:49:01,249 - environment.log - INFO: Client command execution:$ mount 192.168.1.2:/home/kirgenvall/test_nfs /mnt/test_nfs
+2017-06-22 10:49:01,750 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:49:01,880 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:49:01,881 - environment.log - INFO: Client command execution:$ mount 192.168.1.2:/home/kirgenvall/test_ro_nfs /mnt/test_ro_nfs
+2017-06-22 10:49:02,244 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:49:02,248 - environment.log - INFO: ============================================================
+2017-06-22 10:49:02,248 - environment.log - INFO: ===================Tests execution began====================
+2017-06-22 10:49:02,384 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:49:02,385 - environment.log - INFO: Client command execution:$ bash -c "useradd test_user; echo -e 'test
+test' | passwd test_user"
+2017-06-22 10:49:02,767 - environment.log - ERROR: Enter new UNIX password: Retype new UNIX password: passwd: password updated successfully
+2017-06-22 10:49:02,768 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:49:02,909 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:49:02,909 - environment.log - INFO: Client command execution:$ bash -c 'echo check >> /mnt/test_nfs/edition_check'
+2017-06-22 10:50:14,777 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:14,922 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:14,922 - environment.log - INFO: Client command execution:$ runuser -l test_user -c "bash -c 'echo check >> /mnt/test_nfs/edition_check'"
+2017-06-22 10:50:16,165 - environment.log - ERROR: nuser: warning: cannot change directory to /home/test_user: No such file or directory
+2017-06-22 10:50:16,166 - environment.log - ERROR: bash: /mnt/test_nfs/edition_check: Permission denied
+2017-06-22 10:50:16,166 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:16,280 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:16,280 - environment.log - INFO: Client command execution:$ bash -c "userdel test_user"
+2017-06-22 10:50:16,798 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:16,932 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:16,932 - environment.log - INFO: Client command execution:$ bash -c '> /mnt/test_ro_nfs/creation_check'
+2017-06-22 10:50:17,256 - environment.log - ERROR: bash: /mnt/test_ro_nfs/creation_check: Read-only file system
+2017-06-22 10:50:17,257 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:17,390 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:17,390 - environment.log - INFO: Client command execution:$ bash -c 'echo check >> /mnt/test_ro_nfs/edition_check'
+2017-06-22 10:50:17,712 - environment.log - ERROR: bash: /mnt/test_ro_nfs/edition_check: Read-only file system
+2017-06-22 10:50:17,713 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:17,852 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:17,852 - environment.log - INFO: Client command execution:$ rm /mnt/test_ro_nfs/creation_check
+2017-06-22 10:50:18,174 - environment.log - ERROR: m: cannot remove '/mnt/test_ro_nfs/creation_check': No such file or directory
+2017-06-22 10:50:18,175 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:18,310 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:18,310 - environment.log - INFO: Client command execution:$ bash -c '> /mnt/test_nfs/creation_check'
+2017-06-22 10:50:18,642 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:18,786 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:18,787 - environment.log - INFO: Client command execution:$ bash -c 'echo check >> /mnt/test_nfs/edition_check'
+2017-06-22 10:50:19,245 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:19,390 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:19,390 - environment.log - INFO: Client command execution:$ rm /mnt/test_nfs/creation_check
+2017-06-22 10:50:19,722 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:19,722 - environment.log - INFO: ============================================================
+2017-06-22 10:50:19,722 - environment.log - INFO: ================Client state rollback began=================
+2017-06-22 10:50:19,856 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:19,856 - environment.log - INFO: Client command execution:$ umount /mnt/test_ro_nfs
+2017-06-22 10:50:20,221 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:20,363 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:20,363 - environment.log - INFO: Client command execution:$ umount /mnt/test_nfs
+2017-06-22 10:50:20,743 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:20,892 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:20,892 - environment.log - INFO: Client command execution:$ rm -r /mnt/test_ro_nfs /mnt/test_nfs
+2017-06-22 10:50:21,257 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:21,430 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:21,430 - environment.log - INFO: Client command execution:$ service nfs-kernel-server stop
+2017-06-22 10:50:22,237 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:22,391 - environment.log - DEBUG: \\\\\\\\\SSH virtual@192.168.1.3 connection opened\\\\\\\\\\
+2017-06-22 10:50:22,391 - environment.log - INFO: Client command execution:$ apt-get remove nfs-kernel-server nfs-common -y
+2017-06-22 10:50:32,835 - environment.log - DEBUG: Reading package lists...
+2017-06-22 10:50:32,835 - environment.log - DEBUG: Building dependency tree...
+2017-06-22 10:50:32,836 - environment.log - DEBUG: Reading state information...
+2017-06-22 10:50:32,836 - environment.log - DEBUG: The following packages were automatically installed and are no longer required:
+2017-06-22 10:50:32,837 - environment.log - DEBUG:   keyutils libbonobo2-0 libbonobo2-common libgnome-2-0 libgnome2-common
+2017-06-22 10:50:32,837 - environment.log - DEBUG:   libgnomevfs2-0 libgnomevfs2-common libnfsidmap2 liborbit-2-0 libtirpc1
+2017-06-22 10:50:32,837 - environment.log - DEBUG:   linux-headers-4.8.0-46 linux-headers-4.8.0-46-generic linux-headers-4.8.0-49
+2017-06-22 10:50:32,837 - environment.log - DEBUG:   linux-headers-4.8.0-49-generic linux-image-4.8.0-46-generic
+2017-06-22 10:50:32,837 - environment.log - DEBUG:   linux-image-4.8.0-49-generic linux-image-extra-4.8.0-46-generic
+2017-06-22 10:50:32,837 - environment.log - DEBUG:   linux-image-extra-4.8.0-49-generic rpcbind
+2017-06-22 10:50:32,837 - environment.log - DEBUG: Use 'sudo apt autoremove' to remove them.
+2017-06-22 10:50:32,838 - environment.log - DEBUG: The following packages will be REMOVED:
+2017-06-22 10:50:32,838 - environment.log - DEBUG:   nfs-common nfs-kernel-server
+2017-06-22 10:50:32,838 - environment.log - DEBUG: 0 upgraded, 0 newly installed, 2 to remove and 227 not upgraded.
+2017-06-22 10:50:32,838 - environment.log - DEBUG: After this operation, 1.232 kB disk space will be freed.
+2017-06-22 10:50:32,838 - environment.log - DEBUG: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 277788 files and directories currently installed.)
+2017-06-22 10:50:32,838 - environment.log - DEBUG: Removing nfs-kernel-server (1:1.2.8-9.2ubuntu1) ...
+2017-06-22 10:50:32,838 - environment.log - DEBUG: Removing nfs-common (1:1.2.8-9.2ubuntu1) ...
+2017-06-22 10:50:32,838 - environment.log - DEBUG: Processing triggers for man-db (2.7.5-1) ...
+2017-06-22 10:50:32,838 - environment.log - DEBUG: /////////SSH virtual@192.168.1.3 connection closed//////////
+2017-06-22 10:50:32,838 - environment.log - INFO: ============================================================
+2017-06-22 10:50:32,838 - environment.log - INFO: ================Server state rollback began=================
+2017-06-22 10:50:32,842 - environment.log - INFO: Server command execution:$ service nfs-kernel-server stop
+2017-06-22 10:50:33,120 - environment.log - INFO: Server command execution:$ sed -i '$ d' /etc/exports
+2017-06-22 10:50:33,135 - environment.log - INFO: Server command execution:$ sed -i '$ d' /etc/exports
+2017-06-22 10:50:33,151 - environment.log - INFO: Server command execution:$ rm -r /home/kirgenvall/test_nfs /home/kirgenvall/test_ro_nfs
+2017-06-22 10:50:33,173 - environment.log - INFO: Server command execution:$ apt-get remove nfs-kernel-server nfs-common -y
+2017-06-22 10:50:39,516 - environment.log - DEBUG: Reading package lists...
+2017-06-22 10:50:39,516 - environment.log - DEBUG: Building dependency tree...
+2017-06-22 10:50:39,516 - environment.log - DEBUG: Reading state information...
+2017-06-22 10:50:39,516 - environment.log - DEBUG: The following packages were automatically installed and are no longer required:
+2017-06-22 10:50:39,516 - environment.log - DEBUG:   keyutils libedataserverui-1.2-1 libnfsidmap2 libtirpc1
+2017-06-22 10:50:39,516 - environment.log - DEBUG:   qtdeclarative5-accounts-plugin qtdeclarative5-ubuntu-download-manager0.1
+2017-06-22 10:50:39,516 - environment.log - DEBUG:   rpcbind unity-webapps-qml
+2017-06-22 10:50:39,516 - environment.log - DEBUG: Use 'sudo apt autoremove' to remove them.
+2017-06-22 10:50:39,516 - environment.log - DEBUG: The following packages will be REMOVED:
+2017-06-22 10:50:39,516 - environment.log - DEBUG:   nfs-common nfs-kernel-server
+2017-06-22 10:50:39,517 - environment.log - DEBUG: 0 upgraded, 0 newly installed, 2 to remove and 9 not upgraded.
+2017-06-22 10:50:39,517 - environment.log - DEBUG: After this operation, 1232 kB disk space will be freed.
+2017-06-22 10:50:39,517 - environment.log - DEBUG: (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 251582 files and directories currently installed.)
+2017-06-22 10:50:39,517 - environment.log - DEBUG: Removing nfs-kernel-server (1:1.2.8-9.2ubuntu2) ...
+2017-06-22 10:50:39,517 - environment.log - DEBUG: Removing nfs-common (1:1.2.8-9.2ubuntu2) ...
+2017-06-22 10:50:39,517 - environment.log - DEBUG: Processing triggers for man-db (2.7.6.1-2) ...

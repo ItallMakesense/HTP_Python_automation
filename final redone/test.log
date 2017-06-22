@@ -1,0 +1,31 @@
+2017-06-22 10:49:02,249 - test.log - INFO: ============================================================
+2017-06-22 10:49:02,249 - test.log - INFO: ===================Tests execution began====================
+2017-06-22 10:49:02,249 - test.log - INFO: ________NFS folder user access permission test began________
+2017-06-22 10:49:02,249 - test.log - INFO: New client user creation
+2017-06-22 10:49:02,768 - test.log - ERROR: Enter new UNIX password: Retype new UNIX password: passwd: password updated successfully
+2017-06-22 10:49:02,768 - test.log - INFO: User created
+2017-06-22 10:49:02,769 - test.log - INFO: --------------Main user permission test began---------------
+2017-06-22 10:50:14,777 - test.log - INFO: Test passed
+2017-06-22 10:50:14,778 - test.log - INFO: ----------Newly created user permission test began----------
+2017-06-22 10:50:16,166 - test.log - ERROR: nuser: warning: cannot change directory to /home/test_user: No such file or directory
+bash: /mnt/test_nfs/edition_check: Permission denied
+2017-06-22 10:50:16,166 - test.log - INFO: Test passed
+2017-06-22 10:50:16,167 - test.log - INFO: Deletion of the created user...
+2017-06-22 10:50:16,799 - test.log - INFO: User deleted
+2017-06-22 10:50:16,799 - test.log - INFO: ________NFS folder "read-only" attributes test began________
+2017-06-22 10:50:16,799 - test.log - INFO: ------------------File creation test began------------------
+2017-06-22 10:50:17,257 - test.log - ERROR: bash: /mnt/test_ro_nfs/creation_check: Read-only file system
+2017-06-22 10:50:17,257 - test.log - INFO: Test passed
+2017-06-22 10:50:17,258 - test.log - INFO: ------------------File edition test began-------------------
+2017-06-22 10:50:17,713 - test.log - ERROR: bash: /mnt/test_ro_nfs/edition_check: Read-only file system
+2017-06-22 10:50:17,713 - test.log - INFO: Test passed
+2017-06-22 10:50:17,714 - test.log - INFO: ------------------File deletion test began------------------
+2017-06-22 10:50:18,175 - test.log - ERROR: m: cannot remove '/mnt/test_ro_nfs/creation_check': No such file or directory
+2017-06-22 10:50:18,175 - test.log - INFO: Test passed
+2017-06-22 10:50:18,176 - test.log - INFO: _______NFS folder "read-write" attributes test began________
+2017-06-22 10:50:18,176 - test.log - INFO: ------------------File creation test began------------------
+2017-06-22 10:50:18,643 - test.log - INFO: Test passed
+2017-06-22 10:50:18,643 - test.log - INFO: ------------------File edition test began-------------------
+2017-06-22 10:50:19,245 - test.log - INFO: Test passed
+2017-06-22 10:50:19,246 - test.log - INFO: ------------------File deletion test began------------------
+2017-06-22 10:50:19,722 - test.log - INFO: Test passed
