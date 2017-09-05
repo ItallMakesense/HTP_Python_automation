@@ -1,8 +1,11 @@
+""" Description """
 import subprocess as sp
-import os
+import logging
 import sys
+import os
+import re
 
-from constants import *
+from config import *
 from tear_down import remove
 
 
@@ -10,31 +13,43 @@ RUN_DIR = os.path.dirname(__file__)
 if not RUN_DIR:
     RUN_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def setup_venv():
-    sp.run(['pip', 'install', 'virtualenv'])
-    sp.run(['virtualenv', ENV_PATH])
-    sp.run([PIP_PATH, 'install', 'fabric3'])
+LOG = logging.getLogger(LOG_NAME)
+LOG.setLevel(logging.DEBUG)
+LOG_FILE = logging.FileHandler(os.path.join(RUN_DIR, LOG_DIR, LOG_NAME))
+LOG_FILE.setFormatter(logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s: %(message)s"))
+LOG.addHandler(LOG_FILE)
 
+def setup_venv():
+    """ Description """
+    setup_order = [
+        ['pip', 'install', 'virtualenv'],
+        ['virtualenv', ENV_PATH],
+        [PIP_PATH, 'install', 'fabric3']
+        ]
+    for step in setup_order:
+        result = execute(step, stdout=sp.PIPE, stderr=sp.PIPE)
+        write_to({LOG.debug: result[0].decode(), LOG.error: result[1].decode()})
+
+# 0
+if not CLIENT_HOST_PASSWORD:
+    CLIENT_HOST_PASSWORD = input('Enter local host password: ')
+if not SERVER_HOST_PASSWORD:
+    SERVER_HOST_PASSWORD = input('Enter remote host password: ')
+
+# print("LOGGER", LOG)
 # 1
 setup_venv()
 
-# 2 - THERE WILL BE TEST RUNNER
-if not CLIENT_HOST_PASSWORD:
-    CLIENT_HOST_PASSWORD = input('Enter local user password: ')
+# 2
+stdout, stderr = execute(['sudo', '-S', PYTHON_PATH, os.path.join(RUN_DIR,
+                         'test.py')], stdin=sp.PIPE,
+                         input_line=CLIENT_HOST_PASSWORD)
 
-# result = sp.run('sudo -S {run_with} {file}'.format(run_with=PYTHON_PATH,
-#                 file=os.path.join(RUN_DIR, 'test.py')), shell=True,
-#                 input=(CLIENT_HOST_PASSWORD+'\n').encode(),
-#                 stdout=sp.PIPE, stderr=sp.PIPE)
-# print("TEST RUN RESULT:", result)
-# print("TEST IS DONE IN", RUN_DIR)
+################################################################################
+# LOGGING + MULTIPROCESSING (I.E. SUBPROCESS) = ?!
+################################################################################
 
-cmd = sp.Popen('sudo -S {run_with} {file}'.format(run_with=PYTHON_PATH,
-                file=os.path.join(RUN_DIR, 'test.py')), shell=True,
-                stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
-result, errors = cmd.communicate(input=(CLIENT_HOST_PASSWORD+'\n').encode())
-print("TEST RUN RESULT:", result.decode())
-print("TEST RUN ERRORS:", errors.decode())
-print("TEST IS DONE IN", RUN_DIR)
+# write_to({LOG.debug: stdout.decode(), LOG.error: stderr.decode()})
 
 remove(ENV_PATH)
