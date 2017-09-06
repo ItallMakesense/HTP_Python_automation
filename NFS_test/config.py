@@ -3,8 +3,6 @@ DESCRIPTION
 """
 
 from platform import dist
-import subprocess as sp
-import socket
 import os
 
 
@@ -26,7 +24,7 @@ SERVER_HOST_PASSWORD = 'me' # Write known password
 SERVER_ADDRESS = '192.168.56.5' # Write known address
 
 # CLIENT_HOST_NAME
-CLIENT_HOST_PASSWORD = None
+CLIENT_HOST_PASSWORD = 'me'
 CLIENT_ADDRESS = '192.168.56.1'
 
 SERVER_TEST_DIR = '/mnt/future_test' # Write desirable directory
@@ -37,11 +35,10 @@ TEST_FILE_PATH = os.path.join(SERVER_TEST_DIR, TEST_FILE_NAME)
 
 
 EXPORTS_PATH = '/etc/exports'
-EXPORTS_OPTIONS = ['rw', 'sync', 'no_root_squash']
-EXPORTS_LINE = "{dir} {ip}({opt})\n".format(
+JOIN_EXPORTS = lambda options: "{dir} {ip}({opt})\n".format(
     dir=SERVER_TEST_DIR,
     ip=CLIENT_ADDRESS,
-    opt=','.join(EXPORTS_OPTIONS)
+    opt=options
     )
 
 PACKAGE_MANAGERS_MAP = {
@@ -57,20 +54,3 @@ PACKAGE_MANAGERS_MAP = {
 PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
 
 NFS_UTILS = ('nfs-kernel-server', 'nfs-common')
-
-def execute(command, stdin=None, stdout=None, stderr=None, input_line=None):
-    """ Description """
-    shell = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr)
-    if input_line:
-        input_line = (input_line + '\n').encode()
-    return shell.communicate(input=input_line)
-
-def write_to(msg_to_log_map):
-    """
-    This function fiters empty lines in the given `msg` string,
-    and logs the rest to the given `log` logger, line by line
-    """
-    for log, msg in msg_to_log_map.items():
-        for line in msg.splitlines():
-            if line:
-                log(line)

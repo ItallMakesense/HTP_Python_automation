@@ -12,26 +12,27 @@ import sys
 import os
 
 from config import *
+import common
 
 
-def remove(directory, skip=None):
+def remove_dir(directory, skip=None):
     """ Description """
     for entry in os.scandir(directory):
         if entry.path == skip:
             continue
         elif entry.is_dir(follow_symlinks=False):
-            remove(entry.path)
+            remove_dir(entry.path)
         else:
             os.remove(entry.path)
     os.rmdir(directory)
 
-def server():
+def server(exports_opts):
     """ Description """
     PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
+    EXPORTS_LINE = JOIN_EXPORTS(exports_opts)
     #
     for util in NFS_UTILS:
-        execute(["service", util, "stop"])
-        # sp.run(["service", util, "stop"])
+        common.execute(["service", util, "stop"])
     #
     with open(EXPORTS_PATH) as file:
         existed = file.readlines()
@@ -39,36 +40,36 @@ def server():
     with open(EXPORTS_PATH, 'w') as file:
         file.writelines(existed)
     #
-    remove(SERVER_TEST_DIR)
-    #
     sp.run([PACKAGE_MANAGER, 'remove', '-y', *NFS_UTILS])
+    #
+    try:
+        remove_dir(SERVER_TEST_DIR)
+    except OSError as error:
+        print(error)
+    else:
+        print("REMOVED -", SERVER_TEST_DIR)
 
 def client():
     """ Description """
     LOG = logging.getLogger(LOG_NAME)
     #
-    unmount = execute(['umount', CLIENT_TEST_DIR], stdout=sp.PIPE,
-                      stderr=sp.PIPE)
-    write_to({LOG.debug: unmount[0].decode(), LOG.error: unmount[1].decode()})
-    # sp.run(['umount', CLIENT_TEST_DIR])
+    unmount = common.execute(['umount', CLIENT_TEST_DIR], stdout=sp.PIPE, stderr=sp.PIPE)
+    common.write_to({LOG.debug: unmount[0].decode(), LOG.error: unmount[1].decode()})
     #
     try:
-        remove(CLIENT_TEST_DIR, skip=ENV_PATH)
+        remove_dir(CLIENT_TEST_DIR, skip=ENV_PATH)
     except OSError as error:
-        write_to({LOG.error: error})
+        common.write_to({LOG.error: error})
     else:
-        write_to({LOG.debug: ' '.join((CLIENT_TEST_DIR, "was removed"))})
+        common.write_to({LOG.debug: ' '.join(("REMOVED -", CLIENT_TEST_DIR))})
     #
     for util in NFS_UTILS:
-        stop = execute(["service", util, "stop"], stdout=sp.PIPE,
-                       stderr=sp.PIPE)
-        write_to({LOG.debug: stop[0].decode(), LOG.error: stop[1].decode()})
-        # sp.run(["service", util, "stop"])
+        stop = common.execute(["service", util, "stop"], stdout=sp.PIPE, stderr=sp.PIPE)
+        common.write_to({LOG.debug: stop[0].decode(), LOG.error: stop[1].decode()})
     #
-    util_rem = execute([PACKAGE_MANAGER, 'remove', '-y', *NFS_UTILS],
-                       stdout=sp.PIPE, stderr=sp.PIPE)
-    write_to({LOG.debug: util_rem[0].decode(), LOG.error: util_rem[1].decode()})
-    # sp.run([PACKAGE_MANAGER, 'remove', '-y', *NFS_UTILS])
+    util_rem = common.execute([PACKAGE_MANAGER, 'remove', '-y', *NFS_UTILS],
+                              stdout=sp.PIPE, stderr=sp.PIPE)
+    common.write_to({LOG.debug: util_rem[0].decode(), LOG.error: util_rem[1].decode()})
 
 if NFS_SERVER in sys.argv:
-    server()
+    server(sys.argv.pop())
