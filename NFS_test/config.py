@@ -7,7 +7,7 @@ import os
 
 
 LOG_DIR = '' # Write desirable directory name
-LOG_NAME = 'test'
+LOG_NAME = 'test_nfs'
 
 ENV_DIR = os.getcwd() # Write desirable directory
 
@@ -30,8 +30,8 @@ CLIENT_ADDRESS = '192.168.56.1'
 SERVER_TEST_DIR = '/mnt/future_test' # Write desirable directory
 CLIENT_TEST_DIR = '/mnt/future_test' # Write desirable directory
 
-TEST_FILE_NAME = 'test_file' # Write desirable file name
-TEST_FILE_PATH = os.path.join(SERVER_TEST_DIR, TEST_FILE_NAME)
+TEST_FILE = 'test_file' # Write desirable file name
+GET_TEST_PATH = lambda test_dir: os.path.join(test_dir, TEST_FILE)
 
 
 EXPORTS_PATH = '/etc/exports'

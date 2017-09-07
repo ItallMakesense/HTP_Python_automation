@@ -1,13 +1,9 @@
 """
-RUN WITH SUDO!!!
-
-When set up in testing framework:
- (echo 'LOCAL=True'; cat check.py) | ssh virtual@192.168.56.5 python - server
+Description
 """
 
 from platform import dist
 import subprocess as sp
-import logging
 import sys
 import os
 
@@ -47,11 +43,11 @@ def server(exports_opts):
     except OSError as error:
         print(error)
     else:
-        print("REMOVED -", SERVER_TEST_DIR)
+        print("Removed -", SERVER_TEST_DIR)
 
-def client():
+def client(logger):
     """ Description """
-    LOG = logging.getLogger(LOG_NAME)
+    LOG = logger
     #
     unmount = common.execute(['umount', CLIENT_TEST_DIR], stdout=sp.PIPE, stderr=sp.PIPE)
     common.write_to({LOG.debug: unmount[0].decode(), LOG.error: unmount[1].decode()})
@@ -61,7 +57,7 @@ def client():
     except OSError as error:
         common.write_to({LOG.error: error})
     else:
-        common.write_to({LOG.debug: ' '.join(("REMOVED -", CLIENT_TEST_DIR))})
+        common.write_to({LOG.debug: ' '.join(("Removed -", CLIENT_TEST_DIR))})
     #
     for util in NFS_UTILS:
         stop = common.execute(["service", util, "stop"], stdout=sp.PIPE, stderr=sp.PIPE)

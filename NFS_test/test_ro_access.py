@@ -12,7 +12,7 @@ import tear_down
 RUN_DIR, LOG, LOG_FILE = common.initiate_logger(__name__, __file__)
 TEST_FILE_PATH = GET_TEST_PATH(CLIENT_TEST_DIR)
 
-EXPORTS_OPTIONS = ['rw', 'sync', 'no_subtree_check']
+EXPORTS_OPTIONS = ['ro', 'sync', 'no_subtree_check']
 
 # Test Set Up
 def setup_function(function):
@@ -26,45 +26,36 @@ def setup_function(function):
     LOG.info(common.MAKE_CAP("Client setup"))
     set_up.client(LOG)
 
-def test_creation():
+def test_creation(capsys):
     """ Description """
     new_file_path = os.path.join(CLIENT_TEST_DIR, 'test_creation')
     LOG.info(common.MAKE_CAP("Creation test start"))
     try:
-        open(new_file_path, 'w').close()
-    except Exception as error:
-        LOG.error(error)
-        LOG.info("Test failed")
-    else:
-        LOG.debug("Created - %s" % new_file_path)
-        LOG.info("Test passed")
+        with open(new_file_path, 'w') as file:
+            LOG.info("Successfully created -", new_file_path)
+            LOG.info("Test passed")
+    out, err = capsys.readouterr()
+    common.write_to({LOG.debug: out, LOG.error: err})
     LOG.info(common.MAKE_CAP("Creation test end"))
 
-def test_edition():
+def test_edition(capsys):
     """ Description """
     LOG.info(common.MAKE_CAP("Edition test start"))
-    try:
-        with open(TEST_FILE_PATH, 'w') as file:
-            file.write(TEST_FILE_PATH)
-    except Exception as error:
-        LOG.error(error)
-        LOG.info("Test failed")
-    else:
-        LOG.debug("Edited - %s" % TEST_FILE_PATH)
-        LOG.info("Test passed")
+    with open(TEST_FILE_PATH, 'w') as file:
+        file.write("Test succeeded")
+        print("Successfully edited -", TEST_FILE_PATH)
+    out, err = capsys.readouterr()
+    common.write_to({LOG.debug: out, LOG.error: err})
     LOG.info(common.MAKE_CAP("Edition test end"))
 
-def test_deletion():
+def test_deletion(capsys):
     """ Description """
     LOG.info(common.MAKE_CAP("Deletion test start"))
-    try:
-        os.remove(TEST_FILE_PATH)
-    except Exception as error:
-        LOG.error(error)
-        LOG.info("Test failed")
-    else:
-        LOG.debug("Deleted - %s" % TEST_FILE_PATH)
-        LOG.info("Test passed")
+    os.remove(TEST_FILE_PATH)
+    if not os.path.exists(TEST_FILE_PATH):
+        print("Successfully deleted -", TEST_FILE_PATH)
+    out, err = capsys.readouterr()
+    common.write_to({LOG.debug: out, LOG.error: err})
     LOG.info(common.MAKE_CAP("Deletion test start"))
 
 # Test Tear Down
