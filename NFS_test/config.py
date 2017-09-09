@@ -6,16 +6,16 @@ from platform import dist
 import os
 
 
-LOG_DIR = '' # Write desirable directory name
-LOG_NAME = 'test_nfs'
+_file_dir_ = os.path.dirname(__file__)
 
-ENV_DIR = os.getcwd() # Write desirable directory
+LOG_DIR = os.path.join(_file_dir_, 'logs') # Write desirable directory
+INFO_LOG = 'info.log'
+DEBUG_LOG = 'debug.log'
+CMD_LOG = 'commands.log'
 
-ENV_NAME = 'new' # Write desirable name
-
-ENV_PATH = os.path.join(ENV_DIR, ENV_NAME)
-PIP_PATH = os.path.join(ENV_PATH, 'bin/pip')
-PYTHON_PATH = os.path.join(ENV_PATH, 'bin/python')
+ENV_DIR = os.path.join(_file_dir_, 'venv') # Write desirable directory
+PIP_PATH = os.path.join(ENV_DIR, 'bin/pip')
+PYTHON_PATH = os.path.join(ENV_DIR, 'bin/python')
 
 NFS_SERVER = 'server'
 
@@ -30,11 +30,13 @@ CLIENT_ADDRESS = '192.168.56.1'
 SERVER_TEST_DIR = '/mnt/future_test' # Write desirable directory
 CLIENT_TEST_DIR = '/mnt/future_test' # Write desirable directory
 
-TEST_FILE = 'test_file' # Write desirable file name
-GET_TEST_PATH = lambda test_dir: os.path.join(test_dir, TEST_FILE)
+# TEST_FILE = 'test_file' # Write desirable file name
+# GET_TEST_PATH = lambda test_dir: os.path.join(test_dir, TEST_FILE)
+TESTS_DIR = os.path.join(_file_dir_, 'tests')
 
 
 EXPORTS_PATH = '/etc/exports'
+EXPORTS_OPTIONS = ['sync', 'no_subtree_check'] # Example. Will change in every test case
 JOIN_EXPORTS = lambda options: "{dir} {ip}({opt})\n".format(
     dir=SERVER_TEST_DIR,
     ip=CLIENT_ADDRESS,
@@ -54,3 +56,5 @@ PACKAGE_MANAGERS_MAP = {
 PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
 
 NFS_UTILS = ('nfs-kernel-server', 'nfs-common')
+
+__all__ = [const for const in dir() if not const.startswith('_')]

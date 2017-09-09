@@ -4,6 +4,7 @@ Description
 
 from platform import dist
 import subprocess as sp
+import logging
 import sys
 import os
 
@@ -11,52 +12,60 @@ from config import *
 import common
 
 
-def server(exports_opts):
-    """ Description """
-    PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
-    EXPORTS_LINE = JOIN_EXPORTS(exports_opts)
-    TEST_FILE_PATH = GET_TEST_PATH(SERVER_TEST_DIR)
-    #
-    common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS])
-    #
-    open(TEST_FILE_PATH, 'w').close()
-    if os.path.exists(TEST_FILE_PATH):
-        print("Created -", TEST_FILE_PATH)
-    else:
-        print("Not created -", TEST_FILE_PATH)
-    #
-    with open(EXPORTS_PATH, 'r+') as file:
-        if EXPORTS_LINE not in file.readlines():
-            file.write(EXPORTS_LINE)
-    #
-    common.execute(['exportfs', '-a'])
-    #
-    for util in NFS_UTILS:
-        common.execute(["service", util, "restart"])
+DEBUG_LOG = logging.getLogger(DEBUG_LOG)
 
-def client(logger):
+class Suite:
     """ Description """
-    LOG = logger
-    #
-    install = common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS],
-                             stdout=sp.PIPE, stderr=sp.PIPE)
-    common.write_to({LOG.debug: install[0].decode(), LOG.error: install[1].decode()})
-    #
-    for util in NFS_UTILS:
-        start = common.execute(["service", util, "start"], stdout=sp.PIPE,
+
+    @classmethod
+    def server(cls, exports_opts):
+        """ Description """
+        PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
+        EXPORTS_LINE = JOIN_EXPORTS(exports_opts)
+        #
+        common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS])
+        #
+        with open(EXPORTS_PATH, 'r+') as file:
+            if EXPORTS_LINE not in file.readlines():
+                file.write(EXPORTS_LINE)
+        #
+        common.execute(['exportfs', '-a'])
+        #
+        for util in NFS_UTILS:
+            common.execute(["service", util, "restart"])
+
+    @classmethod
+    def client(cls, test_dir, log):
+        """ Description """
+        install = common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS],
+                                 stdout=sp.PIPE, stderr=sp.PIPE)
+        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], install)
+        #
+        for util in NFS_UTILS:
+            start = common.execute(["service", util, "start"], stdout=sp.PIPE,
+                                   stderr=sp.PIPE)
+            common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], start)
+        if not start[2]: # Exit code
+            log.info("NFS installed")
+        #
+        os.makedirs(test_dir, exist_ok=True)
+        if os.path.exists(test_dir):
+            log.info("Created - %s" % test_dir)
+        else:
+            DEBUG_LOG.debug("Not created - %s" % test_dir)
+
+class Case:
+    """ Description """
+
+    @classmethod
+    def client(cls, test_dir, log):
+        """ Description """
+        remote_dir = ':'.join((SERVER_ADDRESS, SERVER_TEST_DIR))
+        mount = common.execute(['mount', remote_dir, test_dir], stdout=sp.PIPE,
                                stderr=sp.PIPE)
-        common.write_to({LOG.debug: start[0].decode(), LOG.error: start[1].decode()})
-    #
-    os.makedirs(CLIENT_TEST_DIR, exist_ok=True)
-    if os.path.exists(CLIENT_TEST_DIR):
-        log, msg = LOG.debug, ' '.join(("Created -", CLIENT_TEST_DIR,))
-    else:
-        log, msg = LOG.error, ' '.join(("Not created -", CLIENT_TEST_DIR))
-    common.write_to({log: msg})
-    #
-    mount = common.execute(['mount', '-o', '_netdev', ':'.join((SERVER_ADDRESS, SERVER_TEST_DIR)),
-                            CLIENT_TEST_DIR], stdout=sp.PIPE, stderr=sp.PIPE)
-    common.write_to({LOG.debug: mount[0].decode(), LOG.error: mount[1].decode()})
+        if not mount[2]: # Exit code
+            log.info("Mounted - %s - %s" % (remote_dir, test_dir))
+        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], mount)
 
 if NFS_SERVER in sys.argv:
-    server(sys.argv.pop())
+    Suite.server(sys.argv.pop())

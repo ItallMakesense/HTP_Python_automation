@@ -6,7 +6,7 @@ import subprocess as sp
 import logging
 import os.path
 
-from config import LOG_DIR, LOG_NAME
+from config import *
 
 
 def execute(command, stdin=None, stdout=None, stderr=None, input_line=None):
@@ -14,30 +14,41 @@ def execute(command, stdin=None, stdout=None, stderr=None, input_line=None):
     shell = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr, start_new_session=True)
     if input_line:
         input_line = (input_line + '\n').encode()
-    return shell.communicate(input=input_line)
+    try:
+        stdout, stderr = shell.communicate(input=input_line)
+    except KeyboardInterrupt as exc:
+        shell.terminate()
+        stdout, stderr = "Interrupted".encode(), repr(exc).encode()
+    return stdout, stderr, shell.returncode
 
-def write_to(msg_to_log_map):
+def write_to(loggers, msg):
     """
     This function fiters empty lines in the given `msg` string,
     and logs the rest to the given `log` logger, line by line
     """
-    for log, msg in msg_to_log_map.items():
+    def split_and_log(logger, msg):
+        """ Description """
         for line in msg.splitlines():
             if line:
-                log(line)
+                logger(line)
+    std_map = {0: 'stdout', 1: 'stderr'}
+    for num, logger in enumerate(loggers):
+        if isinstance(msg, str):
+            split_and_log(logger, msg)
+        elif isinstance(msg, tuple):
+            split_and_log(logger, msg[num].decode()) # stdout - 0, stderr - 1
+        else:
+            split_and_log(logger, getattr(msg, std_map[num]))
 
-def initiate_logger(name, file):
+def initiate_logger(name):
     """ Description """
-    directory = os.path.dirname(file)
-    if not directory:
-        directory = os.path.dirname(os.path.abspath(file))
-    #
+    os.makedirs(LOG_DIR, exist_ok=True)
     log = logging.getLogger(name)
     log.setLevel(logging.DEBUG)
-    log_file = logging.FileHandler(os.path.join(directory, LOG_DIR, name))
+    log_file = logging.FileHandler(os.path.join(LOG_DIR, name))
     log_file.setFormatter(logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s: %(message)s"))
+        "%(asctime)s - %(levelname)s: %(message)s"))
     log.addHandler(log_file)
-    return directory, log, log_file
+    return log, log_file
 
-MAKE_CAP = lambda string: string.upper().center(80, '=')
+MAKE_CAP = lambda string, filler='=': string.upper().center(80, filler)

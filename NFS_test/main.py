@@ -1,75 +1,77 @@
-""" Description """
+"""
+Description
+
+Minuses:
+    - !python3! required on a remote server
+"""
 import subprocess as sp
+import argparse
 
-from config import CLIENT_HOST_PASSWORD, SERVER_HOST_PASSWORD,\
-                   ENV_PATH, PIP_PATH, PYTHON_PATH, LOG_NAME
-from tear_down import remove_dir
+from config import *
 import common
-
-# TO DO !!!
-class BaseTest:
-    """ Description """
-
-    def setup_method(self, method):
-        """ Description """
-        # set up server
-        LOG.info(common.MAKE_CAP("Server setup"))
-        bridge.prepare(LOG, SERVER_TEST_DIR)
-        bridge.remote_shell(LOG, 'python3', SERVER_TEST_DIR, set_up, NFS_SERVER,
-                            ','.join(EXPORTS_OPTIONS))
-        # set up client
-        LOG.info(common.MAKE_CAP("Client setup"))
-        set_up.client(LOG)
-
-    # Test Tear Down
-    def teardown_method(self, method):
-        """ Description """
-        # tear down client
-        LOG.info(common.MAKE_CAP("Client teardown"))
-        tear_down.client(LOG)
-        # tear down server
-        LOG.info(common.MAKE_CAP("Server teardown"))
-        bridge.remote_shell(LOG, 'python3', SERVER_TEST_DIR, tear_down, NFS_SERVER,
-                            ','.join(EXPORTS_OPTIONS))
+import tear_down
 
 
-def setup_venv():
+def setup_venv(logger):
     """ Description """
     setup_order = [
         ['pip', 'install', 'virtualenv'],
-        ['virtualenv', ENV_PATH],
+        ['virtualenv', ENV_DIR],
         [PIP_PATH, 'install', 'fabric3', 'pytest']
         ]
     for step in setup_order:
         result = common.execute(step, stdout=sp.PIPE, stderr=sp.PIPE)
-        common.write_to({LOG.debug: result[0].decode(), LOG.error: result[1].decode()})
+        common.write_to([logger.debug, logger.error], result)
 
-# Logger initialising
-RUN_DIR, LOG, LOG_FILE = common.initiate_logger(LOG_NAME, __file__)
 
-# finding password
-if not CLIENT_HOST_PASSWORD:
-    CLIENT_HOST_PASSWORD = input('Enter local host password: ')
-if not SERVER_HOST_PASSWORD:
-    SERVER_HOST_PASSWORD = input('Enter remote host password: ')
+if __name__ == "__main__":
+    # command line arguments extraction
+    parser = argparse.ArgumentParser(description='Test Suite for NFS file syslem')
+    parser.add_argument('--client_pass', default=CLIENT_HOST_PASSWORD, nargs='?',
+                        help='Local host password (may be defined in config.py)')
+### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+### ! argument for server password --> give through cmd line
 
-# virtualenv installation
-LOG.info(common.MAKE_CAP("Environment installation"))
-setup_venv()
+    parser.add_argument('-k', default=None, nargs='?',
+                        help='Pytest keyword expressions usage')
+### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+### ! argument for specific test --> join with TESTS_DIR
 
-# test execution in a subprocess
-LOG.info(common.MAKE_CAP("Testing start"))
-result = common.execute(['sudo', '-S', PYTHON_PATH, '-m', 'pytest', '-s', RUN_DIR],
-                        stdin=sp.PIPE, stderr=sp.PIPE, stdout=sp.PIPE,
-                        input_line=CLIENT_HOST_PASSWORD)
-common.write_to({LOG.debug: result[0].decode(), LOG.error: result[1].decode()})
-LOG.info(common.MAKE_CAP("Testing end"))
+    args = parser.parse_args()
 
-# removing virtualenv
-LOG.info(common.MAKE_CAP("Environment removing"))
-try:
-    remove_dir(ENV_PATH)
-except OSError as error:
-    common.write_to({LOG.error: error})
-else:
-    common.write_to({LOG.debug: ' '.join(("Removed -", ENV_PATH))})
+    # finding password
+    CLIENT_HOST_PASSWORD = args.client_pass if args.client_pass else\
+                           input('Enter local host password: ')
+
+    # Logger initialising
+    INFO_LOG, INFO_FILE = common.initiate_logger(INFO_LOG)
+    DEBUG_LOG, DEBUG_FILE = common.initiate_logger(DEBUG_LOG)
+
+    # virtualenv installation
+    common.write_to([INFO_LOG.info, DEBUG_LOG.info], common.MAKE_CAP("Environment installation"))
+    try:
+        setup_venv(DEBUG_LOG)
+        INFO_LOG.info("Installed - %s" % ENV_DIR)
+    except Exception as error:
+        DEBUG_LOG.error(error)
+
+    # combining pytest commands
+    keywords = ['-k', args.k] if args.k else ['']
+    PYTEST_LINE = ['-m', 'pytest', '-s', *keywords, TESTS_DIR]
+
+    # test execution in a subprocess
+    common.write_to([INFO_LOG.info, DEBUG_LOG.info], common.MAKE_CAP("Testing start"))
+    DEBUG_FILE.close()
+    result = common.execute(['sudo', '-S', PYTHON_PATH, *PYTEST_LINE],
+                            stdin=sp.PIPE, stderr=sp.PIPE, stdout=sp.PIPE,
+                            input_line=CLIENT_HOST_PASSWORD)
+    common.write_to([INFO_LOG.info, DEBUG_LOG.error], result)
+    common.write_to([INFO_LOG.info, DEBUG_LOG.info], common.MAKE_CAP("Testing end"))
+
+    # removing virtualenv
+    common.write_to([INFO_LOG.info, DEBUG_LOG.info], common.MAKE_CAP("Environment removing"))
+    try:
+        tear_down.remove_dir(ENV_DIR)
+        INFO_LOG.info("Removed - %s" % ENV_DIR)
+    except OSError as error:
+        DEBUG_LOG.error(error)
