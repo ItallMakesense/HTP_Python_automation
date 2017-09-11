@@ -5,6 +5,7 @@ Description
 from platform import dist
 import subprocess as sp
 import logging
+import socket
 import sys
 import os
 
@@ -84,5 +85,5 @@ class Case:
             log.info("Unmounted - %s" % test_dir)
         common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], unmount)
 
-if NFS_SERVER in sys.argv:
+if socket.gethostbyname(socket.gethostname()) == SERVER_ADDRESS:
     Suite.server(sys.argv.pop())

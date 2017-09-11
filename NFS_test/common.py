@@ -9,15 +9,17 @@ import os.path
 from config import *
 
 
-def execute(command, stdin=None, stdout=None, stderr=None, input_line=None):
+def execute(command, stdin=None, stdout=None, stderr=None, shell=False,
+            input_line=None):
     """ Description """
-    shell = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr, start_new_session=True)
+    shell = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr,
+                     shell=shell, start_new_session=True)
     if input_line:
         input_line = (input_line + '\n').encode()
     try:
         stdout, stderr = shell.communicate(input=input_line)
     except KeyboardInterrupt as exc:
-        shell.terminate()
+        sp.run(['sudo', '-S', 'kill', str(shell.pid)], input=input_line)
         stdout, stderr = "Interrupted".encode(), repr(exc).encode()
     return stdout, stderr, shell.returncode
 

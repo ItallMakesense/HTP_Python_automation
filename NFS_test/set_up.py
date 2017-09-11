@@ -5,6 +5,7 @@ Description
 from platform import dist
 import subprocess as sp
 import logging
+import socket
 import sys
 import os
 
@@ -40,6 +41,8 @@ class Suite:
         install = common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS],
                                  stdout=sp.PIPE, stderr=sp.PIPE)
         common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], install)
+        if not install[2]: # Exit code
+            log.info("NFS installed")
         #
         for util in NFS_UTILS:
             start = common.execute(["service", util, "start"], stdout=sp.PIPE,
@@ -67,5 +70,5 @@ class Case:
             log.info("Mounted - %s - %s" % (remote_dir, test_dir))
         common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], mount)
 
-if NFS_SERVER in sys.argv:
+if socket.gethostbyname(socket.gethostname()) == SERVER_ADDRESS:
     Suite.server(sys.argv.pop())

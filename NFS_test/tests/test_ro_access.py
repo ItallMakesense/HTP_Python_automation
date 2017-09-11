@@ -19,9 +19,17 @@ class TestReadOnly(AccessSuite):
     @classmethod
     def setup_class(cls):
         LOG.info(common.MAKE_CAP("NFS test - `read only` access"))
+        LOG.info(common.MAKE_CAP("%s setup" % cls.__name__))
+        #
         cls.log = LOG
         cls.ex_opts = EXPORTS_OPTIONS
-        cls.test_file = os.path.join(SERVER_TEST_DIR, TEST_FILE)
+        cls.test_file = TEST_FILE
         cls.error_meaning = "Test passed"
         cls.success_meaning = "Test failed"
         super().setup_class()
+
+    @classmethod
+    def teardown_class(cls):
+        LOG.info(common.MAKE_CAP("%s teardown" % cls.__name__))
+        #
+        super().teardown_class()
