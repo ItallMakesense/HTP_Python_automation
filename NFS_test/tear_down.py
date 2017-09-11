@@ -45,14 +45,7 @@ class Suite:
         with open(EXPORTS_PATH, 'w') as file:
             file.writelines(existed)
         #
-        sp.run([PACKAGE_MANAGER, 'remove', '-y', *NFS_UTILS])
-        # #
-        # try:
-        #     remove_dir(SERVER_TEST_DIR)
-        # except OSError as error:
-        #     print(error)
-        # else:
-        #     print("Removed -", SERVER_TEST_DIR)
+        sp.run([PACKAGE_MANAGER, 'remove', '-y'] + NFS_UTILS)
 
     @classmethod
     def client(cls, test_dir, log):
@@ -67,7 +60,7 @@ class Suite:
             stop = common.execute(["service", util, "stop"], stdout=sp.PIPE, stderr=sp.PIPE)
             common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], stop)
         #
-        util_rem = common.execute([PACKAGE_MANAGER, 'remove', '-y', *NFS_UTILS],
+        util_rem = common.execute([PACKAGE_MANAGER, 'remove', '-y'] + NFS_UTILS,
                                   stdout=sp.PIPE, stderr=sp.PIPE)
         common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], util_rem)
         if not util_rem[2]: # Exit code

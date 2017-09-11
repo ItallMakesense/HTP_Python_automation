@@ -23,6 +23,8 @@ class Bridge:
     def __init__(self, suite):
         env.password = suite.server_password
         self.__class__.log = suite.log
+        # python_version = sudo('which python', shell=False, shell_escape=True)
+        # self.__class__.python = str(python_version)
 
     @staticmethod
     def prepare(path):

@@ -8,6 +8,8 @@ import os.path
 
 from config import *
 
+# Used for getting log's headers
+MAKE_CAP = lambda string, filler='=': string.upper().center(80, filler)
 
 def execute(command, stdin=None, stdout=None, stderr=None, shell=False,
             input_line=None):
@@ -52,5 +54,3 @@ def initiate_logger(name):
         "%(asctime)s - %(levelname)s: %(message)s"))
     log.addHandler(log_file)
     return log, log_file
-
-MAKE_CAP = lambda string, filler='=': string.upper().center(80, filler)

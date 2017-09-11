@@ -3,6 +3,12 @@ Description
 
 Minuses:
     - !python3! required on a remote server
+
+'pytest_options'
+'Desirable pytest options. For example:\n'
+'--ignore - ignore certain tests\n'
+'-k - keyword expressions'
+
 """
 import subprocess as sp
 import argparse
@@ -15,9 +21,9 @@ import tear_down
 def setup_venv(logger):
     """ Description """
     setup_order = [
-        ['pip', 'install', 'virtualenv'],
+        [SHELL_PIP, 'install', 'virtualenv'],
         ['virtualenv', ENV_DIR],
-        [PIP_PATH, 'install', 'fabric3', 'pytest']
+        [ENV_PIP, 'install', 'fabric3', 'pytest']
         ]
     for step in setup_order:
         result = common.execute(step, stdout=sp.PIPE, stderr=sp.PIPE)
@@ -38,13 +44,7 @@ if __name__ == "__main__":
                         help='Local host password (may be defined in config.py)')
     parser.add_argument(SERVER_PASS, default=SERVER_HOST_PASSWORD, nargs='?',
                         help='Local host password (may be defined in config.py)')
-    parser.add_argument('-k', default=None, nargs='?',
-                        help='Pytest keyword expressions usage. Write specific'
-                             ' \'test_case\', or \'test_one or test_two\' for'
-                             ' a couple of tests, and \'not test_three\''
-                             ' to exclude it. Also \'test_case and test_function\''
-                             ' can be used to run only one test in case')
-    args = parser.parse_args()
+    args, pytest_options = parser.parse_known_args()
 
     # finding passwords
     client_password = args.client_pass if args.client_pass else\
@@ -66,15 +66,13 @@ if __name__ == "__main__":
         DEBUG_LOG.error(error)
 
     # combining pytest commands
-    keywords = ['-k', args.k] if args.k else ['']
-    pytest_line = ['-m', 'pytest', '-s', *keywords, TESTS_DIR]
-    args_line = [CLIENT_PASS, client_password, SERVER_PASS, server_password]
-    print(['sudo', '-S', PYTHON_PATH, *pytest_line, *args_line])
+    pass_line = [CLIENT_PASS, client_password, SERVER_PASS, server_password]
+    pytest_line = ['-m', 'pytest', '-s'] + pytest_options + pass_line
 
     # test execution in a subprocess
     common.write_to([INFO_LOG.info, DEBUG_LOG.info], common.MAKE_CAP("Testing"))
     DEBUG_FILE.close()
-    result = common.execute(['sudo', '-S', PYTHON_PATH, *pytest_line, *args_line],
+    result = common.execute(['sudo', '-S', ENV_PYTHON] + pytest_line,
                             stdin=sp.PIPE, stderr=sp.PIPE, stdout=sp.PIPE,
                             input_line=client_password)
     common.write_to([INFO_LOG.info, DEBUG_LOG.error], result)

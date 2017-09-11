@@ -24,7 +24,7 @@ class Suite:
         PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
         EXPORTS_LINE = JOIN_EXPORTS(exports_opts)
         #
-        common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS])
+        common.execute([PACKAGE_MANAGER, 'install', '-y'] + NFS_UTILS)
         #
         with open(EXPORTS_PATH, 'r+') as file:
             if EXPORTS_LINE not in file.readlines():
@@ -38,7 +38,7 @@ class Suite:
     @classmethod
     def client(cls, test_dir, log):
         """ Description """
-        install = common.execute([PACKAGE_MANAGER, 'install', '-y', *NFS_UTILS],
+        install = common.execute([PACKAGE_MANAGER, 'install', '-y'] + NFS_UTILS,
                                  stdout=sp.PIPE, stderr=sp.PIPE)
         common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], install)
         if not install[2]: # Exit code

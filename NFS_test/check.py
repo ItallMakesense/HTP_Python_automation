@@ -1,3 +1,4 @@
-import os
+from subprocess import check_output
 
-print(os.geteuid())
+
+print(check_output('which pip', shell=True).decode().strip())

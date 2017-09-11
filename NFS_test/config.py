@@ -3,6 +3,7 @@ DESCRIPTION
 """
 
 from platform import dist
+from subprocess import check_output,  CalledProcessError
 import os
 
 # Root directory of `nfs tester`
@@ -13,10 +14,17 @@ LOG_DIR = os.path.join(_file_dir_, 'logs') # Write desirable folder
 INFO_LOG = 'info.log' # Write desirable name
 DEBUG_LOG = 'debug.log' # Write desirable name
 
+# Required tools
+try: # When pip isn't installed on a computer, where module is
+    SHELL_PIP = check_output('which pip', shell=True).decode().strip()
+except  CalledProcessError:
+    SHELL_PIP = None
+
+
 # Virtual environment constants
 ENV_DIR = os.path.join(_file_dir_, 'venv') # Write desirable folder
-PIP_PATH = os.path.join(ENV_DIR, 'bin/pip')
-PYTHON_PATH = os.path.join(ENV_DIR, 'bin/python')
+ENV_PIP = os.path.join(ENV_DIR, 'bin/pip')
+ENV_PYTHON = os.path.join(ENV_DIR, 'bin/python')
 
 # Server info
 SERVER_ADDRESS = '192.168.56.5' # Write server address
@@ -32,9 +40,6 @@ CLIENT_HOST_PASSWORD = None # Write server sudo password (also see `pytest_nfs.p
 # Testing folders
 SERVER_TEST_DIR = '/mnt/future_test' # Write desirable folder
 CLIENT_TEST_DIR = '/mnt/future_test' # Write desirable folder
-
-# Folder with tests
-TESTS_DIR = os.path.join(_file_dir_, 'tests')
 
 # Exports info
 EXPORTS_PATH = '/etc/exports'
@@ -57,7 +62,7 @@ PACKAGE_MANAGERS_MAP = {
     'gentoo': 'equo'
     }
 PACKAGE_MANAGER = PACKAGE_MANAGERS_MAP[dist()[0].lower()] # Contains PMs name of the current OS
-NFS_UTILS = ('nfs-kernel-server', 'nfs-common')
+NFS_UTILS = ['nfs-kernel-server', 'nfs-common']
 
 # command line arguments = {
 CLIENT_PASS = '--client_pass'
