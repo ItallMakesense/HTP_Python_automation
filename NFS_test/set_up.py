@@ -2,9 +2,10 @@
 Description
 """
 
+from __future__ import print_function
 from platform import dist
-import subprocess as sp
-import logging
+from subprocess import PIPE
+from logging import getLogger
 import socket
 import sys
 import os
@@ -13,7 +14,7 @@ from config import *
 import common
 
 
-DEBUG_LOG = logging.getLogger(DEBUG_LOG)
+DEBUG_LOG = getLogger(DEBUG_LOG)
 
 class Suite:
     """ Description """
@@ -36,39 +37,35 @@ class Suite:
             common.execute(["service", util, "restart"])
 
     @classmethod
-    def client(cls, test_dir, log):
+    def client(cls, test_dir):
         """ Description """
         install = common.execute([PACKAGE_MANAGER, 'install', '-y'] + NFS_UTILS,
-                                 stdout=sp.PIPE, stderr=sp.PIPE)
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], install)
-        if not install[2]: # Exit code
-            log.info("NFS installed")
+                                 collect=True)
+        # common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], install)
         #
         for util in NFS_UTILS:
-            start = common.execute(["service", util, "start"], stdout=sp.PIPE,
-                                   stderr=sp.PIPE)
-            common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], start)
-        if not start[2]: # Exit code
-            log.info("NFS installed")
-        #
-        os.makedirs(test_dir, exist_ok=True)
-        if os.path.exists(test_dir):
-            log.info("Created - %s" % test_dir)
-        else:
-            DEBUG_LOG.debug("Not created - %s" % test_dir)
+            start = common.execute(["service", util, "start"], collect=True)
+            # common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], start)
+        try:
+            os.makedirs(test_dir)
+        except OSError:
+            pass # When test_dir exists
+        result = "Created" if os.path.exists(test_dir) else "Not created"
+        DEBUG_LOG.debug("%s - %s" % (result, test_dir))
+        return install[2] and True if result == "Created" else False
 
 class Case:
     """ Description """
 
     @classmethod
-    def client(cls, test_dir, log):
+    def client(cls, test_dir):
         """ Description """
         remote_dir = ':'.join((SERVER_ADDRESS, SERVER_TEST_DIR))
-        mount = common.execute(['mount', remote_dir, test_dir], stdout=sp.PIPE,
-                               stderr=sp.PIPE)
-        if not mount[2]: # Exit code
-            log.info("Mounted - %s - %s" % (remote_dir, test_dir))
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], mount)
+        mount = common.execute(['mount', remote_dir, test_dir], collect=True)
+        if mount[2]: # Exit code
+            DEBUG_LOG.debug("Mounted - %s - %s" % (remote_dir, test_dir))
+        # common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], mount)
+        return mount[2]
 
 if socket.gethostbyname(socket.gethostname()) == SERVER_ADDRESS:
     Suite.server(sys.argv.pop())

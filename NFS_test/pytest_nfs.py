@@ -10,7 +10,7 @@ Minuses:
 '-k - keyword expressions'
 
 """
-import subprocess as sp
+
 import argparse
 
 from config import *
@@ -18,7 +18,7 @@ import common
 import tear_down
 
 
-def setup_venv(logger):
+def setup_venv():
     """ Description """
     setup_order = [
         [SHELL_PIP, 'install', 'virtualenv'],
@@ -26,8 +26,7 @@ def setup_venv(logger):
         [ENV_PIP, 'install', 'fabric3', 'pytest']
         ]
     for step in setup_order:
-        result = common.execute(step, stdout=sp.PIPE, stderr=sp.PIPE)
-        common.write_to([logger.debug, logger.error], result)
+        common.execute(step, collect=True)
 
 def get_passwd(line):
     """ Description """
@@ -60,10 +59,11 @@ if __name__ == "__main__":
     common.write_to([INFO_LOG.info, DEBUG_LOG.info],
                     common.MAKE_CAP("Environment installation"))
     try:
-        setup_venv(DEBUG_LOG)
+        setup_venv()
         INFO_LOG.info("Installed - %s" % ENV_DIR)
     except Exception as error:
         DEBUG_LOG.error(error)
+        exit()
 
     # combining pytest commands
     pass_line = [CLIENT_PASS, client_password, SERVER_PASS, server_password]
@@ -72,16 +72,15 @@ if __name__ == "__main__":
     # test execution in a subprocess
     common.write_to([INFO_LOG.info, DEBUG_LOG.info], common.MAKE_CAP("Testing"))
     DEBUG_FILE.close()
-    result = common.execute(['sudo', '-S', ENV_PYTHON] + pytest_line,
-                            stdin=sp.PIPE, stderr=sp.PIPE, stdout=sp.PIPE,
-                            input_line=client_password)
+    result = common.execute(['sudo', '-S', ENV_PYTHON] + pytest_line, collect=True,
+                            input_line=client_password, pytest=True)
     common.write_to([INFO_LOG.info, DEBUG_LOG.error], result)
 
     # removing virtualenv
     common.write_to([INFO_LOG.info, DEBUG_LOG.info],
                     common.MAKE_CAP("Environment removing"))
     try:
-        tear_down.remove_dir(ENV_DIR)
-        INFO_LOG.info("Removed - %s" % ENV_DIR)
+        common.execute(['rm', '-r', ENV_DIR], collect=True, pytest=True)
+        common.write_to([INFO_LOG.info, DEBUG_LOG.debug], "Removed - %s" % ENV_DIR)
     except OSError as error:
         DEBUG_LOG.error(error)

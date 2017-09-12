@@ -2,7 +2,6 @@
 Description
 """
 
-import logging
 import pytest
 
 from config import *
@@ -13,6 +12,7 @@ import tear_down
 
 
 DEBUG_LOG, DEBUG_FILE = common.initiate_logger(DEBUG_LOG)
+
 
 class Suite:
     """ Description """
@@ -27,73 +27,62 @@ class Suite:
     @classmethod
     def setup_class(cls):
         """ Description """
-        common.write_to([cls.log.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("Server setup", '_'))
-        #
-        cls.bridge = Bridge(cls)
+        cls.bridge = Bridge(cls.server_password)
         # Set up server
-        cls.bridge.prepare(SERVER_TEST_DIR)
+        cls.bridge.sudo('mkdir %s' % SERVER_TEST_DIR)
         cls.bridge.send(SERVER_TEST_DIR, set_up)
-        result = cls.bridge.remote_shell('python3', SERVER_TEST_DIR, set_up,
-                                         ','.join(cls.ex_opts))
-        if result.succeeded:
-            cls.log.info("Setup succeeded")
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], result)
+        rem_res = cls.bridge.remote_shell(cls.bridge.python, SERVER_TEST_DIR,
+                                          set_up, cls.ex_opts)
+        act = "succeeded" if rem_res.succeeded else "failed"
+        cls.log.info("Server setup %s" % act)
         cls.bridge.remove(SERVER_TEST_DIR, only_files=True)
-        #
-        common.write_to([cls.log.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("Client setup", '_'))
         # Set up client
-        set_up.Suite.client(CLIENT_TEST_DIR, cls.log)
+        loc_res = set_up.Suite.client(CLIENT_TEST_DIR)
+        act = "succeeded" if loc_res else "failed"
+        cls.log.info("Client setup %s" % act)
 
     @classmethod
     def teardown_class(cls):
         """ Description """
-        common.write_to([cls.log.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("Client teardown", '_'))
         # Tear down client
-        tear_down.Suite.client(CLIENT_TEST_DIR, cls.log)
-
-        common.write_to([cls.log.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("Server teardown", '_'))
-        
+        loc_res = tear_down.Suite.client(CLIENT_TEST_DIR)
+        act = "succeeded" if loc_res else "failed"
+        cls.log.info("Client teardown %s" % act)
         # Tear down server
         cls.bridge.send(SERVER_TEST_DIR, tear_down)
-        result = cls.bridge.remote_shell('python3', SERVER_TEST_DIR, tear_down,
-                                         ','.join(cls.ex_opts))
-        if result.succeeded:
-            cls.log.info("Teardown succeeded")
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], result)
+        rem_res = cls.bridge.remote_shell(cls.bridge.python, SERVER_TEST_DIR,
+                                          tear_down, cls.ex_opts)
+        act = "succeeded" if rem_res.succeeded else "failed"
+        cls.log.info("Server teardown %s" % act)
         cls.bridge.remove(SERVER_TEST_DIR)
 
     def setup_method(self, method):
         """ Description """
         cls = self.__class__
         common.write_to([cls.log.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("%s setup" % method.__name__, '-'))
+                        common.MAKE_CAP(method.__name__, '-'))
         # set up server
         server_test_file = os.path.join(SERVER_TEST_DIR, cls.test_file)
         create = cls.bridge.sudo("touch %s" % server_test_file)
-        if create.succeeded:
-            cls.log.info("Created - %s" % ':'.join((SERVER_ADDRESS, server_test_file)))
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], create)
+        act = "succeeded" if create.succeeded else "failed"
+        cls.log.info("Server setup %s" % act)
         # set up client
-        set_up.Case.client(CLIENT_TEST_DIR, cls.log)
+        mount = set_up.Case.client(CLIENT_TEST_DIR)
+        act = "succeeded" if mount else "failed"
+        cls.log.info("Client setup %s" % act)
 
     def teardown_method(self, method):
         """ Description """
         cls = self.__class__
-        common.write_to([cls.log.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("%s teardown" % method.__name__, '-'))
         # tear down client
-        tear_down.Case.client(CLIENT_TEST_DIR, cls.log)
+        umount = tear_down.Case.client(CLIENT_TEST_DIR)
+        act = "succeeded" if umount else "failed"
+        cls.log.info("Client teardown %s" % act)
         # tear down server
         server_test_file = os.path.join(SERVER_TEST_DIR, cls.test_file)
-
         remove = cls.bridge.sudo("rm %s" % server_test_file)
-        if remove.succeeded:
-            cls.log.info("Removed - %s" % server_test_file)
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], remove)
+        act = "succeeded" if remove.succeeded else "failed"
+        cls.log.info("Server teardown %s" % act)
 
 
 class AccessSuite(Suite):
@@ -102,7 +91,6 @@ class AccessSuite(Suite):
     def test_creation(self):
         """ Description """
         cls = self.__class__
-        cls.log.info("Creation test".center(80, '.'))
         #
         client_test_file = os.path.join(CLIENT_TEST_DIR, cls.test_file)
         new_file = '.'.join((client_test_file, 'new'))
@@ -118,7 +106,6 @@ class AccessSuite(Suite):
     def test_edition(self):
         """ Description """
         cls = self.__class__
-        cls.log.info("Edition test".center(80, '.'))
         #
         client_test_file = os.path.join(CLIENT_TEST_DIR, cls.test_file)
         try:
@@ -134,7 +121,6 @@ class AccessSuite(Suite):
     def test_deletion(self):
         """ Description """
         cls = self.__class__
-        cls.log.info("Deletion test".center(80, '.'))
         #
         client_test_file = os.path.join(CLIENT_TEST_DIR, cls.test_file)
         try:

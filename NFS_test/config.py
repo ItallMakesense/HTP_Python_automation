@@ -3,7 +3,7 @@ DESCRIPTION
 """
 
 from platform import dist
-from subprocess import check_output,  CalledProcessError
+from subprocess import check_output, CalledProcessError
 import os
 
 # Root directory of `nfs tester`
@@ -13,6 +13,7 @@ _file_dir_ = os.path.dirname(__file__)
 LOG_DIR = os.path.join(_file_dir_, 'logs') # Write desirable folder
 INFO_LOG = 'info.log' # Write desirable name
 DEBUG_LOG = 'debug.log' # Write desirable name
+CMD_LOG = 'ssh_cmds.log' # Write desirable name
 
 # Required tools
 try: # When pip isn't installed on a computer, where module is
@@ -27,14 +28,14 @@ ENV_PIP = os.path.join(ENV_DIR, 'bin/pip')
 ENV_PYTHON = os.path.join(ENV_DIR, 'bin/python')
 
 # Server info
-SERVER_ADDRESS = '192.168.56.5' # Write server address
+SERVER_ADDRESS = '192.168.1.4' # Write server address
 SERVER_HOST_NAME = 'virtual' # Write server user
 SERVER_HOST_PASSWORD = None # Write server sudo password (also see `pytest_nfs.py`)
 
 # Client info
 CLIENT_UID = os.geteuid()
 CLIENT_GID = os.getegid()
-CLIENT_ADDRESS = '192.168.56.1' # Write client address
+CLIENT_ADDRESS = '192.168.1.2' # Write client address
 CLIENT_HOST_PASSWORD = None # Write server sudo password (also see `pytest_nfs.py`)
 
 # Testing folders

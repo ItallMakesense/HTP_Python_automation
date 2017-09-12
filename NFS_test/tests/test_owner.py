@@ -1,6 +1,5 @@
 """ Description """
 
-from subprocess import PIPE
 import logging
 import pytest
 
@@ -22,40 +21,36 @@ class TestOwner(Suite):
     @classmethod
     def setup_class(cls):
         """ Description """
-        LOG.info(common.MAKE_CAP("NFS test - various users access"))
-        LOG.info(common.MAKE_CAP("%s setup" % cls.__name__))
+        common.write_to([LOG.info, DEBUG_LOG.info],
+                        common.MAKE_CAP("NFS test - various users access"))
+        common.write_to([LOG.info, DEBUG_LOG.info],
+                        common.MAKE_CAP("%s setup" % cls.__name__, '_'))
         #
         cls.log = LOG
         cls.ex_opts = EXPORTS_OPTIONS
         cls.test_file = os.path.join(SERVER_TEST_DIR, TEST_FILE)
         #
         add = common.execute(['sudo', '-S', 'useradd', TEST_USER],
-                            stdin=PIPE, stderr=PIPE, stdout=PIPE,
-                            input_line=cls.client_password)
-        if not add[2]: # Exit code
+                             collect=True, input_line=cls.client_password)
+        if add[2]: # Exit code
             LOG.info("Created - %s" % TEST_USER)
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], add)
-        #
         super().setup_class()
 
     @classmethod
     def teardown_class(cls):
         """ Description """
-        LOG.info(common.MAKE_CAP("%s teardown" % cls.__name__))
+        common.write_to([LOG.info, DEBUG_LOG.info],
+                        common.MAKE_CAP("%s teardown" % cls.__name__, '_'))
         #
-        add = common.execute(['sudo', '-S', 'userdel', TEST_USER],
-                            stdin=PIPE, stderr=PIPE, stdout=PIPE,
-                            input_line=cls.client_password)
-        if not add[2]: # Exit code
+        delete = common.execute(['sudo', '-S', 'userdel', TEST_USER],
+                                collect=True, input_line=cls.client_password)
+        if delete[2]: # Exit code
             LOG.info("Removed - %s" % TEST_USER)
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], add)
-        #
         super().teardown_class()
 
     def test_existing_user(self):
         """ Description """
         cls = self.__class__
-        cls.log.info("Existing user access test".center(80, '.'))
         #
         client_test_file = os.path.join(CLIENT_TEST_DIR, cls.test_file)
         try:
@@ -71,15 +66,12 @@ class TestOwner(Suite):
     def test_new_user(self):
         """ Description """
         cls = self.__class__
-        cls.log.info("New user access test".center(80, '.'))
         #
         client_test_file = os.path.join(CLIENT_TEST_DIR, cls.test_file)
-        access = common.execute('sudo -S runuser -l {user} -c \"> {file}\"'.format(
-                                user=TEST_USER, file=client_test_file), shell=True,
-                                stdin=PIPE, stderr=PIPE, stdout=PIPE,
-                                input_line=cls.client_password)
-        granted = bool(not access[2]) # Based on the exit code
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], access)
-        cls.log.info("Access %s - %s" % (granted, client_test_file))
-        cls.log.info("Test passed" if not granted else "Test failed")
-        assert not granted, "%s access %s" %(TEST_USER, granted)
+        access = common.execute('sudo -S runuser -l {user} -c \"touch {file}\"'\
+                                .format(user=TEST_USER, file=client_test_file),
+                                collect=True, input_line=cls.client_password)
+        # common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], access)
+        cls.log.info("Access %s - %s" % (access[2], client_test_file))
+        cls.log.info("Test passed" if not access[2] else "Test failed")
+        assert not access[2], "%s - access denied" % TEST_USER

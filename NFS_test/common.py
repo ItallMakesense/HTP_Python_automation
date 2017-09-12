@@ -4,26 +4,35 @@ DESCRIPTION
 
 import subprocess as sp
 import logging
-import os.path
+import os
 
 from config import *
+
+
+DEBUG_LOG = logging.getLogger(DEBUG_LOG)
 
 # Used for getting log's headers
 MAKE_CAP = lambda string, filler='=': string.upper().center(80, filler)
 
-def execute(command, stdin=None, stdout=None, stderr=None, shell=False,
-            input_line=None):
+def execute(command, collect=False, input_line=None, pytest=False):
     """ Description """
-    shell = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr,
-                     shell=shell, start_new_session=True)
-    if input_line:
-        input_line = (input_line + '\n').encode()
+    # variables
+    command = command if isinstance(command, str) else ' '.join(command)
+    stdin = sp.PIPE if input_line else None
+    stdout, stderr = (sp.PIPE,)*2 if collect else (None,)*2
+    password = (input_line + '\n').encode() if input_line else None
+    # execution
+    proc = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr, shell=True,
+                    preexec_fn=os.setsid)
     try:
-        stdout, stderr = shell.communicate(input=input_line)
-    except KeyboardInterrupt as exc:
-        sp.run(['sudo', '-S', 'kill', str(shell.pid)], input=input_line)
-        stdout, stderr = "Interrupted".encode(), repr(exc).encode()
-    return stdout, stderr, shell.returncode
+        output, errors = proc.communicate(input=password)
+    except KeyboardInterrupt:
+        execute('sudo -S kill %s' % str(proc.pid), input_line=input_line)
+        output, errors = proc.stdout.read(), proc.stderr.read()
+    if collect and not pytest:
+        write_to([DEBUG_LOG.debug, DEBUG_LOG.error],
+                 (output, errors, proc.returncode))
+    return output, errors, not proc.returncode
 
 def write_to(loggers, msg):
     """
@@ -46,7 +55,10 @@ def write_to(loggers, msg):
 
 def initiate_logger(name):
     """ Description """
-    os.makedirs(LOG_DIR, exist_ok=True)
+    try:
+        os.makedirs(LOG_DIR)
+    except OSError:
+        pass # Mostly here, when LOG_DIR exists
     log = logging.getLogger(name)
     log.setLevel(logging.DEBUG)
     log_file = logging.FileHandler(os.path.join(LOG_DIR, name))
