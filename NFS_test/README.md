@@ -19,8 +19,11 @@ Works with python version 2.7+.
 All the information, captured during testing,
 will be available at `logs` folder (by default).
 
-> _Note_: This test will take around 400 seconds... Yeah, pretty bad, but the explanation exists - NFS 90-second grace period: "The purpose of the grace period is to give the clients enough time to notice that the server has rebooted, and to reclaim their existing locks without danger of having somebody else steal the lock from them."
-> NFS installation is prodused every time new test case begins, so: 90 * 3 = 270
+> _Note_: This test will take around 400 seconds... Yeah, pretty bad, but the explanation exists - NFS 90-second grace period:
+  >> "The purpose of the grace period is to give the clients enough time to notice that the server has rebooted, and to reclaim their existing locks without danger of having somebody else steal the lock from them."
+
+> NFS installation is prodused every time new test case begins, so: 90 * 3 = 270.
+
 > That is the 270 seconds of just... waiting.
 
 ### How to use ###
