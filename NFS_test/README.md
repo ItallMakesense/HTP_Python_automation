@@ -31,8 +31,8 @@ will be available at `logs` folder (by default).
 First you need to configurate package execution, using `config.py`.
 
 It's necessary at least to provide local host address, remote host address
-(that would correspond that host's name, see /ets/hosts), and passwords for both
-local and remote hosts (to provide superuser privilegues).
+(that would correspond that host's name, see /ets/hosts) and available user name,
+and passwords for both local and remote hosts (to provide superuser privilegues).
 Other information is optional.
 
 Some of it can be configured directly in command line, using these options
