@@ -1,6 +1,13 @@
-""" Description """
+"""
+Module keeps test suite for checking nfs client's `read and write` access
+permission.
 
-import logging
+To change the class' attributes, defined through command line arguments
+(for example, nfs server test file) directly in this module
+(not with `config.py` or through those command line arguments), simply redefine
+them in the class body
+"""
+
 import pytest
 
 from config import *
@@ -8,29 +15,18 @@ import common
 from .base_suite import AccessSuite
 
 
-DEBUG_LOG = logging.getLogger(DEBUG_LOG)
-LOG, LOG_FILE = common.initiate_logger('test_rw_access.log')
-TEST_FILE = 'test_write'
-EXPORTS_OPTIONS = ['rw', 'sync', 'no_root_squash', 'no_subtree_check']
+LOG = common.initiate_logger(RW_TEST_LOG)
+
 
 class TestReadWrite(AccessSuite):
-    """ Description """
+    """
+    Test case for checking nfs client's `read and write` access permission
+    for the mounted test folder from nfs server
+    """
 
     @classmethod
     def setup_class(cls):
-        common.write_to([LOG.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("NFS test - `read and write` access"))
-        common.write_to([LOG.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("%s setup" % cls.__name__, '_'))
-        cls.log = LOG
-        cls.ex_opts = EXPORTS_OPTIONS
-        cls.test_file = os.path.join(SERVER_TEST_DIR, TEST_FILE)
-        cls.error_meaning = "Test failed"
-        cls.success_meaning = "Test passed"
-        super().setup_class()
-
-    @classmethod
-    def teardown_class(cls):
-        common.write_to([LOG.info, DEBUG_LOG.info],
-                        common.MAKE_CAP("%s teardown" % cls.__name__, '_'))
-        super().teardown_class()
+        """
+        Run `base_suite.AccessSuite.setup_class` with this test case arguments
+        """
+        super().setup_class(LOG, RW_EXPORTS, "NFS test - `read and write` access")

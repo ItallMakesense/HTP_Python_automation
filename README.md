@@ -1,1 +1,0 @@
-Represents course learning process.
