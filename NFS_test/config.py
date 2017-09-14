@@ -48,12 +48,12 @@ ENV_PIP = os.path.join(ENV_DIR, 'bin/pip')
 ENV_PYTHON = os.path.join(ENV_DIR, 'bin/python')
 
 # Server side info (Rewrite if needed)
-SERVER_ADDRESS = '192.168.1.4'
-SERVER_HOST_NAME = 'virtual'
+SERVER_ADDRESS = '200.100.50.25'
+SERVER_HOST_NAME = 'server'
 SERVER_HOST_PASSWORD = None
 
 # Client side info (Rewrite if needed)
-CLIENT_ADDRESS = '192.168.1.2'
+CLIENT_ADDRESS = '100.10.1.0'
 CLIENT_HOST_PASSWORD = None
 
 # Testing parameters (Rewrite if needed)
