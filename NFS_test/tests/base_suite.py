@@ -141,9 +141,10 @@ class Suite:
         cls.log.info("Client teardown %s" % cls.result(umount))
         # tear down server
         server_test_file = os.path.join(cls.server_dir, cls.test_file)
-        remove = cls.bridge.sudo(
-            "test -e {0} && rm {0}".format(server_test_file))
-        cls.log.info("Server teardown %s" % cls.result(remove.succeeded))
+        find = cls.bridge.sudo("test -e %s" % server_test_file)
+        if find.succeeded:
+            remove = cls.bridge.sudo("rm %s" % server_test_file)
+            cls.log.info("Server teardown %s" % cls.result(remove.succeeded))
 
 
 class AccessSuite(Suite):

@@ -30,9 +30,8 @@ class Suite:
     def server(cls, exports_opts):
         """
         For nfs server: install `NFS_UTILS` packages (if available),
-        writes `exports_opts` to `EXPORTS_PATH` (/etc/exports),
+        writes `exports_opts` to `EXPORTS_PATH` (/etc/exports) and
         export test folder with given options for nfs client
-        and restart nfs utils
         """
         manager = PACKAGE_MANAGERS_MAP[dist()[0].lower()]
         exports = JOIN_EXPORTS(exports_opts)
@@ -42,8 +41,6 @@ class Suite:
             if exports not in file.readlines():
                 file.write(exports)
         common.execute(['exportfs', '-a'])
-        for util in NFS_UTILS:
-            common.execute(["service", util, "restart"])
 
     @classmethod
     def client(cls, test_dir):

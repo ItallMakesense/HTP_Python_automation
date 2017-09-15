@@ -21,7 +21,8 @@ CMD_LOG = logging.getLogger(LOC_CMD_LOG)
 MAKE_CAP = lambda string, filler='=': string.upper().center(80, filler)
 
 
-def execute(command, shell=False, collect=False, input_line=None, pytest=False):
+def execute(command, shell=False, collect=False, input_line=None, pytest=False,
+            secure=[]):
     """
     Wrapper around `subprocess.Popen` function. Writes linux `command` to the
     `CMD_LOG` logger, runs this command, writes `input_line` (if it's given)
@@ -29,22 +30,26 @@ def execute(command, shell=False, collect=False, input_line=None, pytest=False):
     Also writes these streams, if there was any and if `pytest` is `False`,
     to the `DEBUG_LOG`
     """
-    CMD_LOG.debug(command if shell else ' '.join(command))
     # variables
     stdin = sp.PIPE if input_line else None
     stdout, stderr = (sp.PIPE,) * 2 if collect else (None,) * 2
     password = (input_line + '\n').encode() if input_line else None
-    # execution
+    # process creation
     proc = sp.Popen(command, stdin=stdin, stdout=stdout, stderr=stderr,
                     shell=shell, preexec_fn=os.setsid)
+    # logging
+    if secure:
+        command = command.split() if shell else command
+        command = [c if c not in secure else '*'*len(c) for c in command]
+    CMD_LOG.debug(command if shell else ' '.join(command))
+    # execution
     try:
         output, errors = proc.communicate(input=password)
     except KeyboardInterrupt:
         return execute(['sudo', '-S', 'kill', str(proc.pid)], collect=True,
                        input_line=input_line)
     if collect and not pytest:
-        write_to([DEBUG_LOG.debug, DEBUG_LOG.error],
-                 (output, errors, proc.returncode))
+        write_to([DEBUG_LOG.debug, DEBUG_LOG.error], [output, errors])
     return output, errors, not proc.returncode
 
 
@@ -63,14 +68,13 @@ def write_to(loggers, msg):
         for line in msg.splitlines():
             if line:
                 logger(line)
-    std_map = {0: 'stdout', 1: 'stderr'}
-    for num, logger in enumerate(loggers):
-        if isinstance(msg, str):
-            split_and_log(logger, msg)
-        elif isinstance(msg, tuple):
-            split_and_log(logger, msg[num].decode())  # stdout - 0, stderr - 1
-        else:
-            split_and_log(logger, getattr(msg, std_map[num]))
+    if isinstance(msg, str):
+        for logger in loggers:
+            logger(msg)
+    elif isinstance(msg, list):
+        for logger, part in zip(loggers, msg):
+            part = part if not isinstance(part, bytes) else part.decode()
+            split_and_log(logger, part)
 
 
 def initiate_logger(name, with_file=False):

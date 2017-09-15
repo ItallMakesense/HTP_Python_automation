@@ -23,6 +23,7 @@ DEBUG_LOG = logging.getLogger(DEBUG_LOG)
 env.password = SERVER_HOST_PASSWORD
 env.host_string = '@'.join((SERVER_HOST_NAME, SERVER_ADDRESS))
 env.warn_only = True
+env.combine_stderr = False
 output['everything'] = False
 
 
@@ -82,7 +83,8 @@ class Bridge:
         command to the `CMD_LOG`, and the result to `DEBUG_LOG`.
         Returns retrieved result
         """
-        result = sudo(command, shell=False, shell_escape=True)
-        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error], result)
+        result = sudo(command)
+        common.write_to([DEBUG_LOG.debug, DEBUG_LOG.error],
+                        [result.stdout, result.stderr])
         CMD_LOG.debug(result.command)
         return result

@@ -96,9 +96,11 @@ if __name__ == "__main__":
                     common.MAKE_CAP("Testing"))
     DEBUG_FILE.close()
     CMD_FILE.close()
-    result = common.execute(['sudo', '-S', ENV_PYTHON] + pytest_line, collect=True,
-                            input_line=client_password, pytest=True)
-    common.write_to([INFO_LOG.info, DEBUG_LOG.error], result)
+    end = common.execute(['sudo', '-S', ENV_PYTHON] + pytest_line,
+                                    input_line=client_password, collect=True,
+                                    pytest=True, secure=[client_password,
+                                                         server_password])
+    common.write_to([INFO_LOG.info, DEBUG_LOG.error], [end[0], end[1]])
 
     # removing virtualenv
     common.write_to([INFO_LOG.info, DEBUG_LOG.info],
