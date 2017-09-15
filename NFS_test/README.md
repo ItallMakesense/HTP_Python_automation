@@ -16,6 +16,9 @@ while remote computer - nfs server.
 
 Works with python version 2.7+.
 
+Though it's essential to also have pip package manager,
+assosiated with already installed python, on a local host.
+
 All the information, captured during testing,
 will be available at `logs` folder (by default).
 
